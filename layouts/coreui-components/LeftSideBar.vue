@@ -30,12 +30,22 @@
             <i class="fa fa-handshake-o"></i> Trades</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="base/cards.html">
+          <a class="nav-link" href="/disputes">
             <i class="fa fa-balance-scale"></i> Disputes</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="base/breadcrumb.html">
+        <li class="nav-item nav-dropdown">
+          <a class="nav-link nav-dropdown-toggle" href="#">
             <i class="fa fa-buysellads"></i> Advertisements</a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" href="/advertisements">
+                <i class="nav-icon icon-puzzle"></i> List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/advertisements/new">
+                <i class="nav-icon icon-puzzle"></i> New</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-title">Settings</li>
       </ul>

@@ -5,7 +5,11 @@
         <div class="card">
           <div class="card-header"><strong>Trade Status</strong></div>
           <div class="card-body">
-            <TradeProgress />
+            <StepProgress
+                :length="5"
+                :labels="['Request','Start','Payment','Release','Done']"
+                :step="2"
+            />
           </div>
         </div>
       </div>
@@ -51,6 +55,17 @@
             <h5><strong>Step 2:</strong> confirm your payment</h5>
 
             <button class="btn btn-primary" type="submit" style="width: 100%">I have payed</button>
+
+            <h5><strong>Step 3:</strong> finalize</h5>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <button class="btn btn-danger" type="submit" style="width: 100%">Dispute</button>
+              </div>
+              <div class="col-sm-6">
+                <button class="btn btn-warning" type="submit" style="width: 100%">Cancel Trade</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,10 +91,10 @@
 </template>
 
 <script>
-  import TradeProgress from '~/components/TradeProgress.vue';
+  import StepProgress from '~/components/StepProgress.vue';
   export default {
     layout: 'coreui',
-    components:{TradeProgress}
+    components:{StepProgress}
   }
 </script>
 

@@ -52,6 +52,7 @@ module.exports = {
   */
   plugins: [
     '~/plugins/global-component-loader.js',
+    '~/plugins/v-viewer.js',
   ],
 
   /*

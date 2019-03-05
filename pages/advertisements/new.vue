@@ -222,6 +222,22 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="company">Terms of trade</label>
+                  <textarea rows="10" class="form-control" id="company" type="number" placeholder=""></textarea>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="adv-description">
+                  <p>Other information you wish to tell about your trade.</p>
+                  <p>Example 1: This advertisement is only for cash trades. If you want to pay online, contact localbitcoins.com/ad/1234.</p>
+                  <p>Example 2: Please make request only when you can complete the payment with cash within 12 hours.</p>
+                </div>
+              </div>
+              <div class="adv-row-separator d-sm-none"></div>
+            </div>
           </div>
           <div class="card-footer">
             <button class="btn btn-sm btn-success" type="submit">

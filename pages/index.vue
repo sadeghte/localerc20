@@ -2,6 +2,37 @@
   <div>
     <div class="row">
       <div class="col-md-12">
+        <TabBox :tabs="['QUICK BUY', 'QUICK SELL']">
+          <div class="row">
+            <div class="col-sm-2">
+              <input type="text" class="form-control" placeholder="Amount">
+            </div>
+            <div class="col-sm-2">
+              <select class="form-control">
+                <option>USD</option>
+                <option>IRR</option>
+                <option>UAE</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option>United State</option>
+                <option>Islamic Republic Of Iran</option>
+                <option>United Arabic Emirate</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option>Payment method #1</option>
+                <option>Payment method #2</option>
+                <option>Payment method #3</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+              <button class="form-control btn btn-success">Search</button>
+            </div>
+          </div>
+        </TabBox>
         <div class="card">
           <div class="card-header"><strong>Buy token from these people</strong></div>
           <div class="card-body">
@@ -176,9 +207,10 @@
 
 <script>
   import LinearProgress from '~/components/LinearProgress';
+  import TabBox from '~/components/TabBox';
   export default {
     layout: 'coreui',
-    components: {LinearProgress},
+    components: {LinearProgress, TabBox},
     data() {
       return {
         sellers: [

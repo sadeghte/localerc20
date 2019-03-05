@@ -65,7 +65,7 @@
                 <td>{{row.payment.method}}</a></td>
                 <td>{{row.price}}</td>
                 <td>
-                  <label class="switch switch-sm switch-label switch-outline-success-alt">
+                  <label class="switch switch-sm switch-label switch-outline-success-alt mb-0">
                     <input class="switch-input" type="checkbox" :checked="row.enable">
                     <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
                   </label>

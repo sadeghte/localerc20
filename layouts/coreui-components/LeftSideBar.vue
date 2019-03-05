@@ -3,8 +3,8 @@
     <nav class="sidebar-nav">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">
-            <i class="nav-icon icon-speedometer"></i> Dashboard
+          <a class="nav-link" href="/">
+            <i class="nav-icon icon-speedometer"></i> Home
             <span class="badge badge-primary">NEW</span>
           </a>
         </li>

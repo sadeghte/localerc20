@@ -18,21 +18,23 @@ module.exports = {
       {src: "/coreui/vendors/jquery/js/jquery.min.js"},
       {src: "/coreui/vendors/popper.js/js/popper.min.js"},
       {src: "/coreui/vendors/bootstrap/js/bootstrap.min.js"},
+      {src: "/coreui/vendors/pace-progress/js/pace.min.js"},
       {src: "/coreui/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"},
       {src: "/coreui/vendors/@coreui/coreui/js/coreui.min.js"},
       {src: "/coreui/vendors/chart.js/js/Chart.min.js"},
       {src: "/coreui/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js"},
-      {src: "/coreui/js/main.js"},
+      // {src: "/coreui/js/main.js"},
     ],
     link: [
+
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
 
       { rel: 'stylesheet' , href: '/coreui/vendors/@coreui/icons/css/coreui-icons.min.css' },
       { rel: 'stylesheet' , href: '/coreui/vendors/flag-icon-css/css/flag-icon.min.css' },
       { rel: 'stylesheet' , href: '/coreui/vendors/font-awesome/css/font-awesome.min.css' },
       { rel: 'stylesheet' , href: '/coreui/vendors/simple-line-icons/css/simple-line-icons.css' },
-      { rel: 'stylesheet' , href: '/coreui/css/style.css' },
-      { rel: 'stylesheet' , href: '/coreui/vendors/pace-progress/css/pace.min.css' }
+      { rel: 'stylesheet' , href: '/coreui/vendors/pace-progress/css/pace.min.css' },
+      { rel: 'stylesheet' , href: '/coreui/css/style.css' }
     ]
   },
 
@@ -59,9 +61,14 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/toast',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+
+    '@nuxtjs/proxy',
+    '@nuxtjs/toast',
+
+    '@nuxtjs/auth',
+
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
   ],
@@ -87,5 +94,30 @@ module.exports = {
   toast: {
     position: 'top-center',
     duration: 3000
-  }
+  },
+  proxy: {
+    '/api': {
+      target: 'http://localhost:5554/',
+      // changeOrigin: true,
+      // pathRewrite: {'^/api': '/api'}
+    }
+  },
+  auth: {
+    // nuxtjs-auth options
+    strategies: {
+      local: {
+        endpoints: {
+          login: {url: '/api/v0.1/auth/login', method: 'post', propertyName: 'token'},
+          logout: {url: '/api/v0.1/auth/logout', method: 'post' },
+          // logout: false,
+          user: {url: '/api/v0.1/user/info', method: 'post', propertyName: 'user'}
+        },
+        tokenRequired: true,
+        tokenType: 'bearer',
+      }
+    },
+    redirect: {
+      home: false
+    }
+  },
 }

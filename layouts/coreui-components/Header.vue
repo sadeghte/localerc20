@@ -1,5 +1,6 @@
 <template>
   <header class="app-header navbar">
+    <LoginModal ref="loginModal"/>
     <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,14 +26,19 @@
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item d-md-down-none px-3">
+      <li v-if="!loggedIn" class="nav-item d-md-down-none px-3">
         <a class="nav-link" href="#">
           Sign up
         </a>
       </li>
-      <li class="nav-item d-md-down-none px-3">
-        <a class="nav-link" href="#">
+      <li v-if="!loggedIn" class="nav-item px-3">
+        <a class="nav-link" href="#"  @click="openLoginModal($event)">
           Log in
+        </a>
+      </li>
+      <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
+        <a class="nav-link" href="#" @click="logout()">
+          Log out
         </a>
       </li>
       <li class="nav-item d-md-down-none">
@@ -41,9 +47,14 @@
           <span class="badge badge-pill badge-danger">5</span>
         </a>
       </li>
-      <li class="nav-item dropdown">
+      <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
+        <a class="nav-link" href="#">
+          {{fullName}}
+        </a>
+      </li>
+      <li v-if="loggedIn" class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <img class="img-avatar" src="/coreui/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
+          <img class="img-avatar" :src="user.avatar" alt="admin@bootstrapmaster.com">
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header text-center">
@@ -96,3 +107,29 @@
     </button>
   </header>
 </template>
+
+<script>
+  import {mapState} from 'vuex';
+  import LoginModal from '../../components/loginModal.vue';
+  export default {
+    components: {LoginModal},
+    data(){
+      return{
+      };
+    },
+    computed: {
+        ...mapState('auth',['loggedIn','user']),
+      fullName: function(){
+          return (this.user.firstName + ' ' + this.user.lastName).trim();
+      }
+    },
+    methods: {
+      openLoginModal(event) {
+        this.$refs.loginModal.show(event);
+      },
+      logout(){
+        this.$refs.loginModal.logout();
+      }
+    }
+  }
+</script>

@@ -6,6 +6,7 @@
       <main class="main">
         <TopStatusBar />
         <div class="container-fluid">
+        <!--<div class="">-->
           <div class="animated fadeIn">
             <nuxt/>
           </div>
@@ -25,11 +26,29 @@
   import RightSideBar from './coreui-components/RightSideBar';
   import TopStatusBar from './coreui-components/TopStatusBar';
 
+  import {mapActions} from 'vuex';
+
   export default {
+    head: {
+      bodyAttrs: {
+        class: "app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show"
+      }
+    },
     components: {Header, Footer, LeftSideBar, RightSideBar, TopStatusBar},
+    async mounted(){
+      let ct = await this.loadCryptoTokens();
+//      console.log('tokens: ',ct);
+      let cc = await this.loadCurrencies();
+//      console.log('curencies: ', cc);
+    },
+    methods: {
+        ... mapActions('global',['loadCryptoTokens','loadCurrencies'])
+    }
   }
 </script>
 
 
 <style lang="scss">
+  @import '../design/global-styles.scss';
+  @import '../design/ui-components.scss';
 </style>

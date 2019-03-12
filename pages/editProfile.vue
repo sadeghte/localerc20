@@ -8,19 +8,19 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <label for="company">User name</label>
-                  <input class="form-control" id="company" type="text" placeholder="Enter your username">
+                  <label for="userNameInput">User name</label>
+                  <input class="form-control" id="userNameInput" type="text" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
-                  <label for="company">First name</label>
-                  <input class="form-control" id="company" type="text" placeholder="Enter your first name">
+                  <label for="firstNameInput">First name</label>
+                  <input class="form-control" v-model="user.firstName" id="firstNameInput" type="text" placeholder="Enter your first name">
                 </div>
                 <div class="form-group">
-                  <label for="company">Last name</label>
-                  <input class="form-control" id="company" type="text" placeholder="Enter your last name">
+                  <label for="lastNameInput">Last name</label>
+                  <input class="form-control" v-model="user.lastName" id="lastNameInput" type="text" placeholder="Enter your last name">
                 </div>
                 <div class="form-group">
-                  <label for="company">Country</label>
+                  <label for="select1">Country</label>
                   <select class="form-control" id="select1" name="select1">
                     <option value="0">Please select your country</option>
                     <option value="1">Country #1</option>
@@ -29,17 +29,18 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="company">Email</label>
+                  <label for="email">Email</label>
                   <input class="form-control" id="email" type="text" placeholder="user@company.com">
                 </div>
                 <div class="form-group">
-                  <label for="company">Phone number</label>
+                  <label for="phone-number">Phone number</label>
                   <input class="form-control" id="phone-number" type="text" placeholder="+98-xxx-xxx-xxxx">
                 </div>
               </div>
               <div class="col-md-4 text-center">
                 <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
-                  <img src="/imgs/profile-empty.jpg" alt="username">
+                  <img v-if="!!user.avatar" :src="user.avatar" alt="username">
+                  <img v-else src="/imgs/profile-empty.jpg" alt="username">
                   <input id="profileSelectInput" type="file" style="display: none" @change="onAvatarSelect">
                 </div>
                 <h3>Username</h3>
@@ -53,11 +54,15 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
     layout: 'coreui',
     data() {
       return {
       }
+    },
+    computed: {
+      ...mapState('auth', ['loggedIn', 'user'])
     },
     methods: {
       onAvatarSelect(){

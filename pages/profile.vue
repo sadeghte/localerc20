@@ -70,7 +70,8 @@
           <div class="card-body">
             <div class="text-center">
               <div class="avatar-container">
-                <img src="/imgs/profile-empty.jpg" alt="username">
+                <img v-if="!!user.avatar" :src="user.avatar" alt="username">
+                <img v-else src="/imgs/profile-empty.jpg" alt="username">
               </div>
               <h3>Username</h3>
               <div class="row" style="margin-top: 2em">
@@ -104,11 +105,15 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
     layout: 'coreui',
     data() {
       return {
       }
+    },
+    computed: {
+        ...mapState('auth', ['loggedIn', 'user'])
     }
   }
 

@@ -5,6 +5,7 @@
         <div class="card">
           <div class="card-header"><strong>New advertisement</strong></div>
           <div class="card-body">
+            <!-- Trade type row -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
@@ -23,18 +24,14 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Token row -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="company">Token</label>
                   <select class="form-control" id="select1" name="select1">
                     <option value="">Select token</option>
-                    <option value="DAI">Dai stable token (DAI)</option>
-                    <option value="PAX">Paxos Standard (PAX)</option>
-                    <option value="BNB">BNB (BNB)</option>
-                    <option value="BAT">BAT (BAT)</option>
-                    <option value="USDC">USD Coin (USDC)</option>
-                    <option value="TUSD">TrueUSD (TUSD)</option>
+                    <option v-for="token in cryptoTokens" :value="token.code">{{token.title}} ({{token.code}})</option>
                   </select>
                 </div>
               </div>
@@ -45,6 +42,7 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Payment method row -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
@@ -59,11 +57,14 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Currency row -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Currency</label>
-                  <input class="form-control" id="company" type="text" placeholder="example: USD">
+                  <label for="currency-select">Currency</label>
+                  <select class="form-control" id="currency-select" name="currency-select">
+                    <option v-for="currency in currencies" :value="currency.code" :selected="currency.code=='USD'">{{currency.code}} - {{currency.title}}</option>
+                  </select>
                 </div>
               </div>
               <div class="col-sm-8">
@@ -252,6 +253,7 @@
 
 <script>
   import TimeSelect from '@/components/TimeSelect';
+  import {mapGetters} from 'vuex';
   export default {
     layout: 'coreui',
     components: {TimeSelect},
@@ -259,6 +261,9 @@
       return {
         advertisement: {}
       }
+    },
+    computed: {
+        ... mapGetters('global',['cryptoTokens', 'currencies'])
     },
     methods: {
       onAvatarSelect() {

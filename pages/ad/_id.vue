@@ -52,6 +52,16 @@ V. Horario de atención de 8:00 a.m. hasta las 16:00
           <div class="card-header"><strong>Trade Info</strong></div>
           <div class="card-body">
 
+            <div class="frm-container">
+              <div class="frm-row">
+                <label>Price</label>
+                <div class="frm-info-box">
+                  <input type="text">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+
             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
               <div class="row">
                 <label class="col-md-3 col-form-label"><strong>Token</strong></label>

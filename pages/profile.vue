@@ -12,7 +12,7 @@
         <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
           <div class="tbl-info-item">
             <div><i class="fa fa-at fa-lg"></i></div>
-            <span>Username:&nbsp;<strong>{{userNameCrop}}</strong></span>
+            <span>Username:&nbsp;<strong>{{usernameCrop}}</strong></span>
           </div>
           <div class="tbl-info-item">
             <div><i class="icons font-lg d-block cui-envelope-letter"></i></div>
@@ -73,10 +73,8 @@
     </div>
     <div class="row nosp mgb10 bdr1">
       <div class="col-md-6 pd10">
-        <div class="form-group">
-          <label for="userNameInput">User name</label>
-          <input class="form-control" id="userNameInput" type="text" placeholder="Enter your username">
-        </div>
+        <UsernameUpdate />
+        <div class="form-space">&nbsp;</div>
         <div class="form-group">
           <label for="firstNameInput">First name</label>
           <input class="form-control" v-model="user.firstName" id="firstNameInput" type="text" placeholder="Enter your first name">
@@ -124,25 +122,27 @@
 
 <script>
   import {mapState} from 'vuex';
+  import UsernameUpdate from '../components/UsernameUpdate';
   export default {
     layout: 'coreui',
+    components: {UsernameUpdate},
     data() {
       return {
       }
     },
     computed: {
         ...mapState('auth', ['loggedIn', 'user']),
-      userNameCrop: function () {
-        if(this.user.userName.length < 20)
-          return this.user.userName;
+      usernameCrop: function () {
+        if(this.user.username.length < 20)
+          return this.user.username;
         else
-          return this.user.userName.substr(0,17) + '...';
-      }
+          return this.user.username.substr(0,17) + '...';
+      },
     },
     methods: {
       onAvatarSelect(){
         this.$toast.success('your avatar changed successfully');
-      }
+      },
     }
   }
 

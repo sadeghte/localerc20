@@ -1,0 +1,74 @@
+<template>
+  <div class="form-group">
+    <label for="userNameInput">Username</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-at fa-lg"></i>
+              </span>
+      </div>
+      <input
+          class="form-control"
+          :class="usernameClass"
+          id="userNameInput"
+          v-model="usernameToChange"
+          @keyup="onUsernameChange"
+          autocomplete="off"
+      />
+      <span class="input-group-append">
+              <button class="btn btn-primary" type="button">Change</button>
+            </span>
+    </div>
+    <div v-if="messageVisible && responseSuccess" class="valid-feedback" style="display: block">{{responseMessage || 'Username is available.'}}</div>
+    <div v-if="messageVisible && !responseSuccess" class="invalid-feedback" style="display: block">{{responseMessage || 'Username is not available.'}}</div>
+  </div>
+</template>
+
+<script>
+  import {mapState} from 'vuex';
+  export default {
+    data(){
+      return {
+        usernameToChange: "",
+        usernameChecked: false,
+        responseSuccess: false,
+        responseMessage: "",
+      }
+    },
+    computed: {
+      ...mapState('auth', ['loggedIn', 'user']),
+      usernameClass: function () {
+        return {
+          'is-valid': (this.usernameToChange !== this.user.username && this.usernameChecked && this.responseSuccess),
+          'is-invalid': (this.usernameToChange !== this.user.username && this.usernameChecked && !this.responseSuccess)
+        };
+      },
+      messageVisible: function () {
+        return this.usernameToChange !== this.user.username && this.usernameChecked;
+      }
+    },
+    mounted(){
+      this.usernameToChange = this.user.username;
+    },
+    methods: {
+      onUsernameChange(){
+        this.usernameChecked = false;
+        if(this.checkUsernameTimeout){
+          clearTimeout(this.checkUsernameTimeout);
+        }
+        this.checkUsernameTimeout = setTimeout(() => {
+          delete this.checkUsernameTimeout;
+          this.$axios.post('/api/v0.1/user/check-username',{username: this.usernameToChange})
+              .then(({data}) => {
+                this.usernameChecked = true;
+                this.responseSuccess = data.success;
+                this.responseMessage = data.message;
+              })
+        },1500);
+      }
+    }
+  }
+</script>
+
+<style>
+</style>

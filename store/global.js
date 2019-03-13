@@ -4,6 +4,7 @@ export const state = () => ({
   // no extra state field
   cryptoTokens: [],
   allCurrencies: [],
+  allCountries: [],
 });
 
 export const getters = {
@@ -12,6 +13,9 @@ export const getters = {
   },
   currencies(state){
     return state.allCurrencies;
+  },
+  countries(state){
+    return state.allCountries;
   }
 }
 
@@ -21,6 +25,9 @@ export const mutations = {
   },
   setCurrencies(state, currencies) {
     state.allCurrencies = currencies;
+  },
+  setCountries(state, countries) {
+    state.allCountries = countries;
   },
 }
 
@@ -42,6 +49,17 @@ export const actions = {
           if(data.success) {
             commit('setCurrencies', data.currencies);
             return data.currencies;
+          }else {
+            return [];
+          }
+        })
+  },
+  loadCountries({dispatch, commit, state, rootState}) {
+    return this.$axios.get('/api/v0.1/resource/countries')
+        .then(({data}) => {
+          if(data.success) {
+            commit('setCountries', data.countries);
+            return data.countries;
           }else {
             return [];
           }

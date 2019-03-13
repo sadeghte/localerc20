@@ -37,6 +37,18 @@
         </div>
         <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
           <div class="tbl-info-item">
+            <div><i class="fa fa-flag fa-lg"></i></div>
+            <span>
+              <span>Country:&nbsp;</span>
+              <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
+              <strong>Iran</strong>
+            </span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-registered fa-lg"></i></div>
+            <span>Joined&nbsp;<strong>2 years ago</strong></span>
+          </div>
+          <div class="tbl-info-item">
             <div>&nbsp;</div>
             <span>Trade volume:&nbsp;<strong>430 USD</strong></span>
           </div>
@@ -47,18 +59,6 @@
           <div class="tbl-info-item">
             <div>&nbsp;</div>
             <span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-registered fa-lg"></i></div>
-            <span>Joined&nbsp;<strong>2 years ago</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-flag fa-lg"></i></div>
-            <span>
-              <span>Country:&nbsp;</span>
-              <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
-              <strong>Iran</strong>
-            </span>
           </div>
           <div class="tbl-info-item">
             <div><i class="fa fa-check-square fa-lg color-success"></i></div>
@@ -87,10 +87,7 @@
         <div class="form-group">
           <label for="select1">Country</label>
           <select class="form-control" id="select1" name="select1">
-            <option value="0">Please select your country</option>
-            <option value="1">Country #1</option>
-            <option value="2">Country #2</option>
-            <option value="3">Country #3</option>
+            <option v-for="country in countries" :selected="country.code==='US'" :value="country.code">{{country.name}}</option>
           </select>
         </div>
         <div class="form-group">
@@ -118,7 +115,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import {mapState, mapGetters} from 'vuex';
   import UpdateUsername from '../components/UpdateUsername';
   import UpdateEmail from '../components/UpdateEmail';
   export default {
@@ -129,7 +126,8 @@
       }
     },
     computed: {
-        ...mapState('auth', ['loggedIn', 'user']),
+        ...mapState('auth', ['loggedIn', 'user', 'countries']),
+        ...mapGetters('global', ['countries']),
       usernameCrop: function () {
         if(this.user.username.length < 20)
           return this.user.username;

@@ -78,22 +78,26 @@
         <div class="form-space">&nbsp;</div>
         <div class="form-group">
           <label for="firstNameInput">First name</label>
-          <input class="form-control" v-model="user.firstName" id="firstNameInput" type="text" placeholder="Enter your first name">
+          <input class="form-control" v-model="firstName" id="firstNameInput" type="text" placeholder="Enter your first name">
         </div>
         <div class="form-group">
           <label for="lastNameInput">Last name</label>
-          <input class="form-control" v-model="user.lastName" id="lastNameInput" type="text" placeholder="Enter your last name">
+          <input class="form-control" v-model="lastName" id="lastNameInput" type="text" placeholder="Enter your last name">
         </div>
         <div class="form-group">
           <label for="select1">Country</label>
-          <select class="form-control" id="select1" name="select1">
-            <option v-for="country in countries" :selected="country.code==='US'" :value="country.code">{{country.name}}</option>
+          <select class="form-control" v-model="country" id="select1" name="select1">
+            <option v-for="c in countries" :selected="c.code===country" :value="c.code">{{c.name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="phone-number">Phone number</label>
-          <input class="form-control" id="phone-number" type="text" placeholder="+98-xxx-xxx-xxxx">
+          <input class="form-control" v-model="mobile" id="phone-number" type="text" placeholder="+98-xxx-xxx-xxxx">
         </div>
+        <button class="btn btn-sm btn-primary" type="submit" @click="saveUserData">
+          <i class="fa fa-save fa-lg"></i>
+          <span> Save changes</span>
+        </button>
       </div>
     </div>
     <div class="row nosp mgb10 pdv10">
@@ -123,7 +127,17 @@
     components: {UpdateUsername, UpdateEmail},
     data() {
       return {
+        firstName: '',
+        lastName: '',
+        country: '',
+        mobile: '',
       }
+    },
+    mounted(){
+      this.firstName = this.user.firstName;
+      this.lastName = this.user.lastName;
+      this.country = this.user.country || 'US';
+      this.mobile = this.user.mobile || '';
     },
     computed: {
         ...mapState('auth', ['loggedIn', 'user', 'countries']),
@@ -139,6 +153,22 @@
       onAvatarSelect(){
         this.$toast.success('your avatar changed successfully');
       },
+      saveUserData(){
+        let {firstName, lastName, country, mobile} = this;
+        this.$axios.post('/api/v0.1/user/update', {firstName, lastName, country, mobile})
+            .then(({data}) => {
+              if(data.success){
+                this.$toast.success("Your profile updated successfully");
+                this.$auth.fetchUser();
+              }else{
+                this.$toast.error(data.message || 'Server side error')
+              }
+            })
+            .catch(error => {
+              let {data} = error.response;
+              this.$toast.error((data && data.message) ? data.message : 'server side error');
+            })
+      }
     }
   }
 

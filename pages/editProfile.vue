@@ -65,9 +65,6 @@
       ...mapState('auth', ['loggedIn', 'user'])
     },
     methods: {
-      onAvatarSelect(){
-        this.$toast.success('your avatar changed successfully');
-      }
     }
   }
 </script>

@@ -3,14 +3,13 @@
     <Header />
     <div class="app-body">
       <LeftSideBar />
-      <main class="main">
-        <TopStatusBar />
-        <div class="container-fluid">
-        <!--<div class="">-->
+      <main class="main pd10 bg-white">
+        <!--<TopStatusBar />-->
+        <!--<div class="container-fluid">-->
           <div class="animated fadeIn">
             <nuxt/>
           </div>
-        </div>
+        <!--</div>-->
       </main>
       <RightSideBar />
     </div>

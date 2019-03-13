@@ -1,104 +1,122 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-7">
-        <div class="card">
-          <div class="card-header"><strong>Account informations</strong></div>
-          <div class="card-body">
-            <table class="user-info-table">
-              <tr>
-                <td colspan="2">
-                  <a href="#"><h2>Username</h2></a>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <h4>information about <a href="#">Username</a></h4>
-                </td>
-              </tr>
-              <tr>
-                <td>Trade volume</td>
-                <td>500 USD</td>
-              </tr>
-              <tr>
-                <td>Number of confirmed trade</td>
-                <td>8</td>
-              </tr>
-              <tr>
-                <td>Feedback score</td>
-                <td>100 %</td>
-              </tr>
-              <tr>
-                <td>Account created</td>
-                <td><strong>3</strong> month age</td>
-              </tr>
-              <tr>
-                <td>Last seen</td>
-                <td><strong>3</strong> month age</td>
-              </tr>
-              <tr>
-                <td>Language</td>
-                <td>English</td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td><i class="fa fa-check-square fa-lg color-success"></i> Confirmed <strong>3</strong> month age</td>
-              </tr>
-              <tr>
-                <td>Phone number</td>
-                <td><i class="fa fa-check-square fa-lg color-success"></i> Confirmed <strong>3</strong> month age</td>
-              </tr>
-              <tr>
-                <td>ID, Passport </td>
-                <td><i class="fa fa-check-square fa-lg color-success"></i> Confirmed <strong>3</strong> month age</td>
-              </tr>
-              <tr>
-                <td>Trust</td>
-                <td><i class="fa fa-check-square fa-lg color-success"></i> Trusted by <strong>4</strong> people</td>
-              </tr>
-              <tr>
-                <td>Blocks</td>
-                <td><i class="fa fa-minus-circle fa-lg mt-4 color-danger"></i> Blocked by <strong>0</strong> people</td>
-              </tr>
-            </table>
+    <div class="row nosp mgb10 bdr1">
+      <div class="col-lg-6 nosp pd10 d-fx">
+        <div class="fx-basis-2">
+          <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
+            <img v-if="!!user.avatar" :src="user.avatar" alt="username">
+            <img v-else src="/imgs/profile-empty.jpg" alt="username">
+            <input id="profileSelectInput" type="file" style="display: none" @change="onAvatarSelect">
+          </div>
+        </div>
+        <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
+          <div class="tbl-info-item">
+            <div><i class="fa fa-at fa-lg"></i></div>
+            <span>Username:&nbsp;<strong>{{userNameCrop}}</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="icons font-lg d-block cui-envelope-letter"></i></div>
+            <span>Email:&nbsp;<strong>Sadeghte@gmail.com</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-phone fa-lg"></i></div>
+            <span>Phone:&nbsp;<span class="badge badge-success">confirmed</span><span>&nbsp;3&nbsp;month&nbsp;ago</span></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><img style="width: 1.2em" src="/imgs/brightid-av-1.jpg" alt=""></div>
+            <span>BrightID&nbsp;Score:&nbsp;<strong class="clr-orange-l">95.5</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-circle fa-lg" style="color: #4dbd74"></i></div>
+            <span>Last&nbsp;seen:&nbsp;<strong>2 minutes ago</strong></span>
           </div>
         </div>
       </div>
-      <div class="col-md-5">
-        <div class="card">
-          <div class="card-header"><strong>Actions</strong></div>
-          <div class="card-body">
-            <div class="text-center">
-              <div class="avatar-container">
-                <img v-if="!!user.avatar" :src="user.avatar" alt="username">
-                <img v-else src="/imgs/profile-empty.jpg" alt="username">
-              </div>
-              <h3>Username</h3>
-              <div class="row" style="margin-top: 2em">
-                <div class="col-sm-6">
-                  <button class="btn btn-block btn-ghost-success active mt-2" type="button" aria-pressed="true">
-                    <i class="fa fa-check-square fa-lg"></i>&nbsp;
-                    <span>Trust this user</span>
-                  </button>
-                </div>
-                <div class="col-sm-6">
-                  <button class="btn btn-block btn-ghost-danger active mt-2" type="button" aria-pressed="true">
-                    <i class="fa fa-minus-circle fa-lg"></i>&nbsp;
-                    <span>Block this user</span>
-                  </button>
-                </div>
-                <div class="col-sm-12">
-                  <a href="/editProfile">
-                    <button class="btn btn-block btn-primary active mt-2" type="button" aria-pressed="true">
-                      <i class="fa fa-edit fa-lg"></i>&nbsp;
-                      <span>Edit Profile</span>
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
+      <div class="col-lg-6 nosp pd10 d-fx">
+        <div class="fx-basis-2">
+        </div>
+        <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
+          <div class="tbl-info-item">
+            <div>&nbsp;</div>
+            <span>Trade volume:&nbsp;<strong>430 USD</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div>&nbsp;</div>
+            <span>Confirmed trades:&nbsp;<strong>8 trade</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div>&nbsp;</div>
+            <span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-registered fa-lg"></i></div>
+            <span>Joined&nbsp;<strong>2 years ago</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-flag fa-lg"></i></div>
+            <span>
+              <span>Country:&nbsp;</span>
+              <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
+              <strong>Iran</strong>
+            </span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-check-square fa-lg color-success"></i></div>
+            <span>Trusted By:&nbsp;<strong class="badge badge-success">5 person</strong></span>
+          </div>
+          <div class="tbl-info-item">
+            <div><i class="fa fa-minus-circle fa-lg color-danger"></i></div>
+            <span>Blocked By:&nbsp;<strong class="badge badge-success">not blocked yet</strong></span>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row nosp mgb10 bdr1">
+      <div class="col-md-6 pd10">
+        <div class="form-group">
+          <label for="userNameInput">User name</label>
+          <input class="form-control" id="userNameInput" type="text" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+          <label for="firstNameInput">First name</label>
+          <input class="form-control" v-model="user.firstName" id="firstNameInput" type="text" placeholder="Enter your first name">
+        </div>
+        <div class="form-group">
+          <label for="lastNameInput">Last name</label>
+          <input class="form-control" v-model="user.lastName" id="lastNameInput" type="text" placeholder="Enter your last name">
+        </div>
+        <div class="form-group">
+          <label for="select1">Country</label>
+          <select class="form-control" id="select1" name="select1">
+            <option value="0">Please select your country</option>
+            <option value="1">Country #1</option>
+            <option value="2">Country #2</option>
+            <option value="3">Country #3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" id="email" type="text" placeholder="user@company.com">
+        </div>
+        <div class="form-group">
+          <label for="phone-number">Phone number</label>
+          <input class="form-control" id="phone-number" type="text" placeholder="+98-xxx-xxx-xxxx">
+        </div>
+      </div>
+    </div>
+    <div class="row nosp mgb10 pdv10">
+      <div class="col-sm-2 nosp">
+        <button class="btn btn-block btn-ghost-success active mt-2 nomg" type="button" aria-pressed="true">
+          <i class="fa fa-check-square fa-lg"></i>&nbsp;
+          <span>Trust this user</span>
+        </button>
+      </div>
+      <div class="col-sm-8"></div>
+      <div class="col-sm-2 nosp">
+        <button class="btn btn-block btn-ghost-danger active mt-2 nomg" type="button" aria-pressed="true">
+          <i class="fa fa-minus-circle fa-lg"></i>&nbsp;
+          <span>Block this user</span>
+        </button>
       </div>
     </div>
   </div>
@@ -113,7 +131,18 @@
       }
     },
     computed: {
-        ...mapState('auth', ['loggedIn', 'user'])
+        ...mapState('auth', ['loggedIn', 'user']),
+      userNameCrop: function () {
+        if(this.user.userName.length < 20)
+          return this.user.userName;
+        else
+          return this.user.userName.substr(0,17) + '...';
+      }
+    },
+    methods: {
+      onAvatarSelect(){
+        this.$toast.success('your avatar changed successfully');
+      }
     }
   }
 
@@ -136,13 +165,12 @@
   .color-success{color: green}
   .color-danger{color: red}
   .avatar-container{
-    width: 14em;
-    height: 14em;
+    width: 10em;
+    height: 10em;
     border-radius: 25em;
     overflow: hidden;
     position: relative;
-    border: 4px solid #aaa;
-    margin: auto;
+    border: 2px solid #aaa;
   }
   .avatar-container img{
     width: 100%;
@@ -157,4 +185,16 @@
     font-weight: bold;
     border: 1px solid #2088b6
   }
+  .tbl-info{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    flex-flow: column nowrap;
+  }
+  .tbl-info-item{
+    width: 100%;
+    display: flex;
+  }
+  .tbl-info-item :nth-child(1){  flex-basis: 2em;  }
+  .tbl-info-item :nth-child(2){  flex-basis: 90%;  }
 </style>

@@ -11,12 +11,12 @@
         <li class="nav-title">Theme</li>
         <li class="nav-item">
           <a class="nav-link" href="/profile">
-            <i class="fa fa-user-circle"></i> Username</a>
+            <i class="fa fa-user-circle"></i> Profile</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/editProfile">
-            <i class="fa fa-edit"></i> Edit Profile</a>
-        </li>
+        <!--<li class="nav-item">-->
+          <!--<a class="nav-link" href="/editProfile">-->
+            <!--<i class="fa fa-edit"></i> Edit Profile</a>-->
+        <!--</li>-->
         <li class="nav-item">
           <a class="nav-link" href="/wallet">
             <i class="icon-wallet icons"></i> Wallet</a>

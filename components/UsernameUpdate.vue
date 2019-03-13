@@ -16,10 +16,10 @@
           autocomplete="off"
       />
       <span class="input-group-append">
-              <button class="btn btn-primary" type="button">Change</button>
-            </span>
+        <button class="btn btn-primary" @click="updateUsername" type="button">Change</button>
+      </span>
     </div>
-    <div v-if="messageVisible && responseSuccess" class="valid-feedback" style="display: block">{{responseMessage || 'Username is available.'}}</div>
+    <div v-if="(messageVisible && responseSuccess) || usernameUpdatedSuccessfully" class="valid-feedback" style="display: block">{{responseMessage || 'Username is available.'}}</div>
     <div v-if="messageVisible && !responseSuccess" class="invalid-feedback" style="display: block">{{responseMessage || 'Username is not available.'}}</div>
   </div>
 </template>
@@ -33,6 +33,7 @@
         usernameChecked: false,
         responseSuccess: false,
         responseMessage: "",
+        usernameUpdatedSuccessfully: false,
       }
     },
     computed: {
@@ -52,6 +53,7 @@
     },
     methods: {
       onUsernameChange(){
+        this.usernameUpdatedSuccessfully = false;
         this.usernameChecked = false;
         if(this.checkUsernameTimeout){
           clearTimeout(this.checkUsernameTimeout);
@@ -65,6 +67,18 @@
                 this.responseMessage = data.message;
               })
         },1500);
+      },
+      updateUsername(){
+        this.usernameChecked = false;
+        this.usernameUpdatedSuccessfully = false;
+        this.$axios.post('/api/v0.1/user/update-username',{username: this.usernameToChange})
+            .then(({data}) => {
+              this.usernameChecked = true;
+              this.responseSuccess = data.success;
+              this.responseMessage = data.message;
+              this.usernameUpdatedSuccessfully = true;
+              this.$auth.fetchUser();
+            })
       }
     }
   }

@@ -14,9 +14,9 @@
             <div><i class="fa fa-at fa-lg"></i></div>
             <span>Username:&nbsp;<strong>{{usernameCrop}}</strong></span>
           </div>
-          <div class="tbl-info-item">
+          <div v-if="!!(user.email)" class="tbl-info-item">
             <div><i class="icons font-lg d-block cui-envelope-letter"></i></div>
-            <span>Email:&nbsp;<strong>Sadeghte@gmail.com</strong></span>
+            <span>Email:&nbsp;<strong>{{user.email}}</strong></span>
           </div>
           <div class="tbl-info-item">
             <div><i class="fa fa-phone fa-lg"></i></div>
@@ -73,7 +73,8 @@
     </div>
     <div class="row nosp mgb10 bdr1">
       <div class="col-md-6 pd10">
-        <UsernameUpdate />
+        <UpdateUsername />
+        <UpdateEmail />
         <div class="form-space">&nbsp;</div>
         <div class="form-group">
           <label for="firstNameInput">First name</label>
@@ -91,10 +92,6 @@
             <option value="2">Country #2</option>
             <option value="3">Country #3</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input class="form-control" id="email" type="text" placeholder="user@company.com">
         </div>
         <div class="form-group">
           <label for="phone-number">Phone number</label>
@@ -122,10 +119,11 @@
 
 <script>
   import {mapState} from 'vuex';
-  import UsernameUpdate from '../components/UsernameUpdate';
+  import UpdateUsername from '../components/UpdateUsername';
+  import UpdateEmail from '../components/UpdateEmail';
   export default {
     layout: 'coreui',
-    components: {UsernameUpdate},
+    components: {UpdateUsername, UpdateEmail},
     data() {
       return {
       }

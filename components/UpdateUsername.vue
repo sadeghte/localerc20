@@ -45,7 +45,7 @@
         };
       },
       messageVisible: function () {
-        return this.usernameToChange !== this.user.username && this.usernameChecked;
+        return this.usernameChecked;
       }
     },
     mounted(){
@@ -70,14 +70,22 @@
       },
       updateUsername(){
         this.usernameChecked = false;
-        this.usernameUpdatedSuccessfully = false;
+//        this.usernameUpdatedSuccessfully = false;
         this.$axios.post('/api/v0.1/user/update-username',{username: this.usernameToChange})
             .then(({data}) => {
               this.usernameChecked = true;
-              this.responseSuccess = data.success;
+              this.responseSuccess = data.success === true;
               this.responseMessage = data.message;
-              this.usernameUpdatedSuccessfully = true;
-              this.$auth.fetchUser();
+              if(data.success) {
+//                this.usernameUpdatedSuccessfully = true;
+                this.$auth.fetchUser();
+              }
+            })
+            .catch(error => {
+              let data = error.response.data;
+              this.usernameChecked = true;
+              this.responseSuccess = data.success === true;
+              this.responseMessage = data.message;
             })
       }
     }

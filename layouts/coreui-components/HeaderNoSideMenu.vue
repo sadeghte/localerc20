@@ -1,16 +1,15 @@
 <template>
   <header class="app-header navbar">
     <LoginModal ref="loginModal"/>
-    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto h-100" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <a class="navbar-brand" href="#">
       <img class="navbar-brand-full" src="/coreui/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
       <img class="navbar-brand-minimized" src="/coreui/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
     </a>
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Quick Buy</a>
@@ -59,12 +58,22 @@
         <ProfileDropDownMenu />
       </li>
     </ul>
-    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div  class="navbar-collapse collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav nav-v d-lg-none">
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#">Quick Buy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#">Quick Sell</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#">Post a trade</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#">Help</a>
+        </li>
+      </ul>
+    </div>
   </header>
 </template>
 
@@ -94,3 +103,6 @@
     }
   }
 </script>
+
+<style>
+</style>

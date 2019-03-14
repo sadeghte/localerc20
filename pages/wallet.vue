@@ -78,20 +78,6 @@
                 </td>
                 <td>427</td>
               </tr>
-              <tr>
-                <td>
-                  <img class="cc-token-avatar" src="/erc20-tokens/paxos_28_2.png">
-                  <span>Paxos Standard (PAX)</span>
-                </td>
-                <td>236</td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="cc-token-avatar" src="/erc20-tokens/bnb_28_2.png">
-                  <span>BNB (BNB)</span>
-                </td>
-                <td>125</td>
-              </tr>
               </tbody>
             </table>
           </div>
@@ -148,8 +134,8 @@
             type: 'In',
             trade: 'ab568d7768f6',
             token:{
-              icon: '/erc20-tokens/paxos_28_2.png',
-              title: 'Paxos Standard (PAX)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -161,8 +147,8 @@
             type: 'Out',
             trade: 'ab568d7768f6',
             token:{
-              icon: '/erc20-tokens/bnb_28_2.png',
-              title: 'BNB (BNB)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -174,8 +160,8 @@
             type: 'Out',
             trade: 'ab568d7768f6',
             token:{
-              icon: '/erc20-tokens/bat.png',
-              title: 'BAT (BAT)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -187,8 +173,8 @@
             type: 'In',
             trade: 'ab568d7768f6',
             token:{
-              icon: '/erc20-tokens/centre-usdc_28.png',
-              title: 'USD Coin (USDC)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -200,8 +186,8 @@
             type: 'Out',
             trade: 'ab568d7768f6',
             token:{
-              icon: '/erc20-tokens/trueusdtoken_28.png',
-              title: 'TrueUSD (TUSD)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },

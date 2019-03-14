@@ -82,8 +82,8 @@
             trader: 'User#N',
             type: 'Buy',
             token:{
-              icon: '/erc20-tokens/paxos_28_2.png',
-              title: 'Paxos Standard (PAX)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -95,8 +95,8 @@
             trader: 'User#N',
             type: 'Sell',
             token:{
-              icon: '/erc20-tokens/bnb_28_2.png',
-              title: 'BNB (BNB)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -108,8 +108,8 @@
             trader: 'User#N',
             type: 'Sell',
             token:{
-              icon: '/erc20-tokens/bat.png',
-              title: 'BAT (BAT)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -121,8 +121,8 @@
             trader: 'User#N',
             type: 'Buy',
             token:{
-              icon: '/erc20-tokens/centre-usdc_28.png',
-              title: 'USD Coin (USDC)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },
@@ -134,8 +134,8 @@
             trader: 'User#N',
             type: 'Buy',
             token:{
-              icon: '/erc20-tokens/trueusdtoken_28.png',
-              title: 'TrueUSD (TUSD)',
+              icon: '/erc20-tokens/dai_stablecoin.png',
+              title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
             },

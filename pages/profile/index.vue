@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row nosp mgb10 bdr1">
+    <div class="row nosp mgb10 bd-1">
       <div class="col-lg-6 nosp pd10 d-fx">
         <div class="fx-basis-2">
           <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-    <div class="row nosp mgb10 bdr1">
+    <div class="row nosp mgb10 bd-1">
       <div class="col-md-6 pd10">
         <UpdateUsername />
         <UpdateEmail />
@@ -120,8 +120,8 @@
 
 <script>
   import {mapState, mapGetters} from 'vuex';
-  import UpdateUsername from '../components/UpdateUsername';
-  import UpdateEmail from '../components/UpdateEmail';
+  import UpdateUsername from '../../components/UpdateUsername';
+  import UpdateEmail from '../../components/UpdateEmail';
   export default {
     layout: 'coreui',
     components: {UpdateUsername, UpdateEmail},
@@ -150,6 +150,7 @@
       },
     },
     methods: {
+
       onAvatarSelect(){
         this.$toast.success('your avatar changed successfully');
       },
@@ -188,8 +189,6 @@
   .user-info-table tr:nth-child(even){
     background: #eee;
   }
-  .color-success{color: green}
-  .color-danger{color: red}
   .avatar-container{
     width: 10em;
     height: 10em;

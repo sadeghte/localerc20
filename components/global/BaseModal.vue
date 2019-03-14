@@ -4,7 +4,7 @@
     <div ref="modalBox" class="generalModalContent" :class="{floatHeight:floatHeight}">
       <div class="modalHeader flexContainer">
         <div class="flexItem">
-          {{title}}
+          <span class="modal-title">{{title}}</span>
         </div>
         <div class="btnCloseModal" @click="hide()">
           <BaseIcon name="times"/>
@@ -141,6 +141,10 @@
 </script>
 
 <style scoped>
+  .modal-title{
+    font-size: 1.2em;
+    font-weight: bold;
+  }
   #maskModal {
     position: absolute;
     background: #fff;

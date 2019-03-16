@@ -1,6 +1,12 @@
 <template>
   <div>
     <div class="row nosp mgb10 box-shadow-2">
+      <div class="col-sm-12 mt-2 d-b-lt-600" style="background: #20a8d8;padding: 1em;">
+        <div class="avatar-container" style="cursor: pointer; margin: auto" onclick="document.getElementById('profileSelectInput').click()">
+          <img v-if="!!user.avatar" :src="user.avatar" alt="username">
+          <img v-else src="/imgs/profile-empty.jpg" alt="username">
+        </div>
+      </div>
       <div class="col-lg-6 nosp pd10 d-fx-ic">
         <div class="fx-basis-2 d-n-lt-600">
           <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
@@ -255,8 +261,10 @@
       height: 10em;
     }
   }
+  .d-b-lt-600{display: none}
   @media only screen and (max-width: 600px){
     .d-n-lt-600 {display: none}
+    .d-b-lt-600 {display: block}
   }
   .avatar-container img{
     width: 100%;

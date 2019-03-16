@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="row bd-1 mb-4">
+    <div class="row bd-1 mb-4 box-shadow-1">
       <div class="col-lg-4 bdr-1">
         <div class="d-fx pdv-20 pointer">
           <img src="/erc20-tokens/dai_stablecoin.png" class="token-img-2" style="margin: auto 4px auto 0">

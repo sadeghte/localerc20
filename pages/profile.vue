@@ -1,36 +1,62 @@
 <template>
   <div>
-    <div class="row nosp mgb10 bd-1">
-      <div class="col-lg-6 nosp pd10 d-fx">
-        <div class="fx-basis-2">
+    <div class="row nosp mgb10 box-shadow-2">
+      <div class="col-lg-6 nosp pd10 d-fx-ic">
+        <div class="fx-basis-1">
           <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
             <img v-if="!!user.avatar" :src="user.avatar" alt="username">
             <img v-else src="/imgs/profile-empty.jpg" alt="username">
             <input id="profileSelectInput" type="file" style="display: none" @change="onAvatarSelect">
           </div>
         </div>
-        <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
-          <div class="tbl-info-item">
-            <div><i class="fa fa-at fa-lg"></i></div>
-            <span>Username:&nbsp;<strong>{{usernameCrop}}</strong></span>
-          </div>
-          <div v-if="!!(user.email)" class="tbl-info-item">
-            <div><i class="icons font-lg d-block cui-envelope-letter"></i></div>
-            <span>Email:&nbsp;<strong>{{user.email}}</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-phone fa-lg"></i></div>
-            <span>Phone:&nbsp;<span class="badge badge-success">confirmed</span><span>&nbsp;3&nbsp;month&nbsp;ago</span></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><img style="width: 1.2em" src="/imgs/brightid-av-1.jpg" alt=""></div>
-            <span>BrightID&nbsp;Score:&nbsp;<strong class="clr-orange-l">95.5</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-circle fa-lg" style="color: #4dbd74"></i></div>
-            <span>Last&nbsp;seen:&nbsp;<strong>2 minutes ago</strong></span>
+        <div class="fx-basis-9">
+          <div class="pd10">
+            <div class="d-fx-ic">
+              <span class="fs-20 fx-basis-9">{{fullName}}</span>
+              <span class="pfx-basis-1 number"><i class="fa fa-star fa-sm"><strong>&nbsp;9.8</strong></i></span>
+            </div>
+            <h6>Small description</h6>
+
+            <div class="tbl-info-item clr-orange-l">
+              <div><img style="width: 1.2em" src="/imgs/brightid-av-1.jpg" alt=""></div>
+              <span>BrightID&nbsp;Score:&nbsp;<strong class="clr-orange-l">{{user.brightIdScore}}</strong></span>
+            </div>
+            <div class="">
+              <button class="btn btn-outline-success mt-2 nomg text-left" type="button" aria-pressed="true">
+                <i class="fa fa-check-square fa-lg"></i>&nbsp;
+                <span>Trust</span>
+
+              </button>
+
+              <button class="btn btn-outline-danger mt-2 nomg text-left" type="button" aria-pressed="true">
+                <i class="fa fa-minus-circle fa-lg"></i>&nbsp;
+                <span>Block</span>
+              </button>
+            </div>
           </div>
         </div>
+        <!--<div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-at fa-lg"></i></div>-->
+            <!--<span>Username:&nbsp;<strong>{{usernameCrop}}</strong></span>-->
+          <!--</div>-->
+          <!--<div v-if="!!(user.email)" class="tbl-info-item">-->
+            <!--<div><i class="icons font-lg d-block cui-envelope-letter"></i></div>-->
+            <!--<span>Email:&nbsp;<strong>{{user.email}}</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-phone fa-lg"></i></div>-->
+            <!--<span>Phone:&nbsp;<span class="badge badge-success">confirmed</span><span>&nbsp;3&nbsp;month&nbsp;ago</span></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><img style="width: 1.2em" src="/imgs/brightid-av-1.jpg" alt=""></div>-->
+            <!--<span>BrightID&nbsp;Score:&nbsp;<strong class="clr-orange-l">{{user.brightIdScore}}</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-circle fa-lg" style="color: #4dbd74"></i></div>-->
+            <!--<span>Last&nbsp;seen:&nbsp;<strong>2 minutes ago</strong></span>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <div class="col-lg-6 nosp pd10 d-fx">
         <div class="fx-basis-2">
@@ -120,9 +146,10 @@
 
 <script>
   import {mapState, mapGetters} from 'vuex';
-  import UpdateUsername from '../../components/UpdateUsername';
-  import UpdateEmail from '../../components/UpdateEmail';
+  import UpdateUsername from '../components/UpdateUsername';
+  import UpdateEmail from '../components/UpdateEmail';
   export default {
+    middleware: 'auth',
     layout: 'coreui',
     components: {UpdateUsername, UpdateEmail},
     data() {
@@ -148,6 +175,9 @@
         else
           return this.user.username.substr(0,17) + '...';
       },
+      fullName: function () {
+        return `${this.user.firstName} ${this.user.lastName}`.trim();
+      }
     },
     methods: {
 
@@ -195,7 +225,11 @@
     border-radius: 25em;
     overflow: hidden;
     position: relative;
-    border: 2px solid #aaa;
+    /*border: 2px solid #aaa;*/
+
+    -webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
   }
   .avatar-container img{
     width: 100%;

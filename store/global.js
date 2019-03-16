@@ -41,7 +41,7 @@ export const actions = {
           }else{
             return [];
           }
-        })
+        }).catch(err =>{})
   },
   loadCurrencies({dispatch, commit, state, rootState}) {
     return this.$axios.get('/api/v0.1/resource/currencies')
@@ -52,7 +52,7 @@ export const actions = {
           }else {
             return [];
           }
-        })
+        }).catch(err =>{})
   },
   loadCountries({dispatch, commit, state, rootState}) {
     return this.$axios.get('/api/v0.1/resource/countries')
@@ -63,6 +63,6 @@ export const actions = {
           }else {
             return [];
           }
-        })
+        }).catch(err =>{})
   },
 }

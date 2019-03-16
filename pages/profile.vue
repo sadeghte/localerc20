@@ -2,14 +2,14 @@
   <div>
     <div class="row nosp mgb10 box-shadow-2">
       <div class="col-lg-6 nosp pd10 d-fx-ic">
-        <div class="fx-basis-1">
+        <div class="fx-basis-2 d-n-lt-600">
           <div class="avatar-container" style="cursor: pointer" onclick="document.getElementById('profileSelectInput').click()">
             <img v-if="!!user.avatar" :src="user.avatar" alt="username">
             <img v-else src="/imgs/profile-empty.jpg" alt="username">
             <input id="profileSelectInput" type="file" style="display: none" @change="onAvatarSelect">
           </div>
         </div>
-        <div class="fx-basis-9">
+        <div class="fx-basis-8">
           <div class="pd10">
             <div class="d-fx-ic">
               <span class="fs-20 fx-basis-9">{{fullName}}</span>
@@ -59,42 +59,69 @@
         <!--</div>-->
       </div>
       <div class="col-lg-6 nosp pd10 d-fx">
-        <div class="fx-basis-2">
+        <div class="fx-basis-2 d-n-lt-600">
         </div>
-        <div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">
-          <div class="tbl-info-item">
-            <div><i class="fa fa-flag fa-lg"></i></div>
-            <span>
-              <span>Country:&nbsp;</span>
-              <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
-              <strong>Iran</strong>
-            </span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-registered fa-lg"></i></div>
-            <span>Joined&nbsp;<strong>2 years ago</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div>&nbsp;</div>
-            <span>Trade volume:&nbsp;<strong>430 USD</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div>&nbsp;</div>
-            <span>Confirmed trades:&nbsp;<strong>8 trade</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div>&nbsp;</div>
-            <span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-check-square fa-lg color-success"></i></div>
-            <span>Trusted By:&nbsp;<strong class="badge badge-success">5 person</strong></span>
-          </div>
-          <div class="tbl-info-item">
-            <div><i class="fa fa-minus-circle fa-lg color-danger"></i></div>
-            <span>Blocked By:&nbsp;<strong class="badge badge-success">not blocked yet</strong></span>
+        <div class="fx-basis-8 mgl10 tbl-info" style="border-left: 1px solid #f7f7f7;">
+          <div class="pd10">
+            <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Location:</h6>
+              <span class="fx-basis-5">
+                <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
+                <span>Iran, Fars, Shiraz</span>
+              </span>
+            </div>
+            <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Joined:</h6>
+              <span class="fx-basis-5">3 years ago</span>
+            </div>
+            <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Feedback score:</h6>
+              <span class="fx-basis-5"><span class="badge badge-success">100 %</span></span>
+            </div>
+            <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Trusted By:</h6>
+              <span class="fx-basis-5"><strong class="badge badge-success">5 person</strong></span>
+            </div>
+            <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Blocked By:</h6>
+              <span class="fx-basis-5"><strong class="badge badge-success">not blocked yet</strong></span>
+            </div>
           </div>
         </div>
+        <!--<div class="mgl10 pdl10 tbl-info fx-basis-8" style="border-left: 1px solid #f7f7f7;">-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-flag fa-lg"></i></div>-->
+            <!--<span>-->
+              <!--<span>Country:&nbsp;</span>-->
+              <!--<i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>-->
+              <!--<strong>Iran</strong>-->
+            <!--</span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-registered fa-lg"></i></div>-->
+            <!--<span>Joined&nbsp;<strong>2 years ago</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div>&nbsp;</div>-->
+            <!--<span>Trade volume:&nbsp;<strong>430 USD</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div>&nbsp;</div>-->
+            <!--<span>Confirmed trades:&nbsp;<strong>8 trade</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div>&nbsp;</div>-->
+            <!--<span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-check-square fa-lg color-success"></i></div>-->
+            <!--<span>Trusted By:&nbsp;<strong class="badge badge-success">5 person</strong></span>-->
+          <!--</div>-->
+          <!--<div class="tbl-info-item">-->
+            <!--<div><i class="fa fa-minus-circle fa-lg color-danger"></i></div>-->
+            <!--<span>Blocked By:&nbsp;<strong class="badge badge-success">not blocked yet</strong></span>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
     <div class="row nosp mgb10 bd-1">
@@ -123,21 +150,6 @@
         <button class="btn btn-sm btn-primary" type="submit" @click="saveUserData">
           <i class="fa fa-save fa-lg"></i>
           <span> Save changes</span>
-        </button>
-      </div>
-    </div>
-    <div class="row nosp mgb10 pdv10">
-      <div class="col-sm-2 nosp">
-        <button class="btn btn-block btn-ghost-success active mt-2 nomg" type="button" aria-pressed="true">
-          <i class="fa fa-check-square fa-lg"></i>&nbsp;
-          <span>Trust this user</span>
-        </button>
-      </div>
-      <div class="col-sm-8"></div>
-      <div class="col-sm-2 nosp">
-        <button class="btn btn-block btn-ghost-danger active mt-2 nomg" type="button" aria-pressed="true">
-          <i class="fa fa-minus-circle fa-lg"></i>&nbsp;
-          <span>Block this user</span>
         </button>
       </div>
     </div>
@@ -176,7 +188,7 @@
           return this.user.username.substr(0,17) + '...';
       },
       fullName: function () {
-        return `${this.user.firstName} ${this.user.lastName}`.trim();
+        return `${this.user.firstName}\xa0${this.user.lastName}`.trim();
       }
     },
     methods: {
@@ -220,8 +232,8 @@
     background: #eee;
   }
   .avatar-container{
-    width: 10em;
-    height: 10em;
+    width: 20em;
+    height: 20em;
     border-radius: 25em;
     overflow: hidden;
     position: relative;
@@ -230,6 +242,21 @@
     -webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
     box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
+  }
+  @media only screen and (max-width: 1100px){
+    .avatar-container {
+      width: 15em;
+      height: 15em;
+    }
+  }
+  @media only screen and (max-width: 760px){
+    .avatar-container {
+      width: 10em;
+      height: 10em;
+    }
+  }
+  @media only screen and (max-width: 600px){
+    .d-n-lt-600 {display: none}
   }
   .avatar-container img{
     width: 100%;

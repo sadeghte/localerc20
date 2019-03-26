@@ -5,6 +5,7 @@ export const state = () => ({
   cryptoTokens: [],
   allCurrencies: [],
   allCountries: [],
+  allPaymentMethods: [],
 });
 
 export const getters = {
@@ -16,6 +17,9 @@ export const getters = {
   },
   countries(state){
     return state.allCountries;
+  },
+  allPaymentMethods(state){
+    return state.allPaymentMethods;
   }
 }
 
@@ -29,6 +33,9 @@ export const mutations = {
   setCountries(state, countries) {
     state.allCountries = countries;
   },
+  setPaymentMethodList(state, allPaymentMethods){
+    state.allPaymentMethods = allPaymentMethods;
+  }
 }
 
 export const actions = {
@@ -64,5 +71,25 @@ export const actions = {
             return [];
           }
         }).catch(err =>{})
+  },
+  loadPaymentMethods({dispatch, commit, state, rootState}) {
+    return this.$axios.get('/api/v0.1/resource/payment-methods')
+        .then(({data}) => {
+          if(data.success) {
+            commit('setPaymentMethodList', data.allPaymentMethods);
+            return data.allPaymentMethods;
+          }else {
+            return [];
+          }
+        }).catch(err =>{})
+  },
+  registerNewAdvertisement({dispatch, commit, state, rootState}, advertisement) {
+    return this.$axios.post('/api/v0.1/advertisement/new', {advertisement})
+        .then(({data}) => {
+          // alert(JSON.stringify(data, null, 2));
+          return data;
+        }).catch(err =>{
+          return err;
+        })
   },
 }

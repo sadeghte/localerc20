@@ -9,11 +9,11 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Type</label>
-                  <select class="form-control" id="select1" name="select1">
+                  <label for="adv-type-select">Type</label>
+                  <select v-model="advertisement.type" class="form-control" id="adv-type-select" name="select1">
                     <option value="">Please select adv type</option>
-                    <option value="1">Sell</option>
-                    <option value="2">Buy</option>
+                    <option value="sell">Sell</option>
+                    <option value="buy">Buy</option>
                   </select>
                 </div>
               </div>
@@ -28,8 +28,8 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Token</label>
-                  <select class="form-control" id="select1" name="select1">
+                  <label for="adv-token-select">Token</label>
+                  <select v-model="advertisement.token" class="form-control" id="adv-token-select" name="select1">
                     <option value="">Select token</option>
                     <option v-for="token in cryptoTokens" :value="token.code">{{token.title}} ({{token.code}})</option>
                   </select>
@@ -46,8 +46,11 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Payment method</label>
-                  <input class="form-control" id="company" type="text" placeholder="Enter payment method">
+                  <label for="adv-payment-method">Payment method</label>
+                  <select v-model="advertisement.paymentMethod" class="form-control" id="adv-payment-method">
+                    <option value="">Select payment method</option>
+                    <option v-for="method in allPaymentMethods" :value="method._id">{{method.title}}</option>
+                  </select>
                 </div>
               </div>
               <div class="col-sm-8">
@@ -61,9 +64,9 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="currency-select">Currency</label>
-                  <select class="form-control" id="currency-select" name="currency-select">
-                    <option v-for="currency in currencies" :value="currency.code" :selected="currency.code=='USD'">{{currency.code}} - {{currency.title}}</option>
+                  <label for="adv-payment-currency">Currency</label>
+                  <select v-model="advertisement.currency" class="form-control" id="adv-payment-currency" name="currency-select">
+                    <option v-for="currency in currencies" :value="currency.code">{{currency.code}} - {{currency.title}}</option>
                   </select>
                 </div>
               </div>
@@ -74,11 +77,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Token Amount -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Amount</label>
-                  <input class="form-control" id="company" type="number" placeholder="example: 2.3241">
+                  <label for="adv-token-amount">Amount</label>
+                  <input v-model="advertisement.amount" class="form-control" id="adv-token-amount" type="number" placeholder="example: 2.3241">
                 </div>
               </div>
               <div class="col-sm-8">
@@ -88,11 +92,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Min Transaction -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Min. transaction limit</label>
-                  <input class="form-control" id="company" type="number" placeholder="example: 0">
+                  <label for="adv-trans-min">Min. transaction limit</label>
+                  <input v-model="advertisement.limitMin" class="form-control" id="adv-trans-min" type="number" placeholder="example: 0">
                 </div>
               </div>
               <div class="col-sm-8">
@@ -102,11 +107,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Max Transaction -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Max. transaction limit</label>
-                  <input class="form-control" id="company" type="number" placeholder="example: 100">
+                  <label for="adv-trans-max">Max. transaction limit</label>
+                  <input v-model="advertisement.limitMax" class="form-control" id="adv-trans-max" type="number" placeholder="example: 100">
                 </div>
               </div>
               <div class="col-sm-8">
@@ -116,11 +122,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Adv enable -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Enable</label>
-                  <select class="form-control" id="select1" name="select1">
+                  <label for="adv-enable">Enable</label>
+                  <select v-model="advertisement.enable" class="form-control" id="adv-enable" name="select1">
                     <option value="1">enable</option>
                     <option value="0">disable</option>
                   </select>
@@ -133,11 +140,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Payment window -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="company">Payment window</label>
-                  <input class="form-control" id="company" type="number" placeholder="example: 04:30">
+                  <label for="adv-payment-window">Payment window</label>
+                  <input v-model="advertisement.paymentWindow" class="form-control" id="adv-payment-window" type="text" placeholder="example: 04:30">
                 </div>
               </div>
               <div class="col-sm-8">
@@ -147,71 +155,24 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Opening Hours -->
             <div class="row">
               <div class="col-sm-4">
                 <div style="margin-bottom: 1em">Opening hours</div>
                 <div class="controls">
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Sun</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
+                  <div class="row opening_hours_row" v-for="(day, index) in ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']">
+                    <div class="col-md-3">{{day}}</div>
+                    <div class="col-sm-3">
+                      <label @click="toggleDayEnable(index, $event)" class="switch switch-label switch-success nomg">
+                        <input class="switch-input" type="checkbox" v-model="advertisement.openingHours[index].enable==true">
+                        <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                      </label>
                     </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
+                    <div class="col-md-3">
+                      <TimeSelect v-model="advertisement.openingHours[index].start" title="start" :disabled="advertisement.openingHours[index].enable !== true" />
                     </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Mon</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
-                    </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Tue</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
-                    </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Wed</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
-                    </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Thu</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
-                    </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Fri</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
-                    </div>
-                  </div>
-                  <div class="row opening_hours_row">
-                    <div class="col-md-4">Sat</div>
-                    <div class="col-md-4">
-                      <TimeSelect title="start" />
-                    </div>
-                    <div class="col-md-4">
-                      <TimeSelect title="end" />
+                    <div class="col-md-3">
+                      <TimeSelect v-model="advertisement.openingHours[index].end" title="end" :disabled="advertisement.openingHours[index].enable != true" />
                     </div>
                   </div>
                 </div>
@@ -223,11 +184,12 @@
               </div>
               <div class="adv-row-separator d-sm-none"></div>
             </div>
+            <!-- Terms of trade -->
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="company">Terms of trade</label>
-                  <textarea rows="10" class="form-control" id="company" type="number" placeholder=""></textarea>
+                  <textarea v-model="advertisement.terms" rows="10" class="form-control" id="company" type="number" placeholder=""></textarea>
                 </div>
               </div>
               <div class="col-sm-8">
@@ -241,33 +203,70 @@
             </div>
           </div>
           <div class="card-footer">
-            <button class="btn btn-sm btn-success" type="submit">
+            <button @click="createAdv" class="btn btn-sm btn-success" type="submit">
               <i class="fa fa-save"></i> Save
             </button>
           </div>
         </div>
       </div>
     </div>
+    <BaseModal title="Error" ref="errorsModal">
+      <div style="padding: 1em">
+        <div v-for="error in registerErrors" class="alert alert-danger">{{error}}</div>
+      </div>
+    </BaseModal>
   </div>
 </template>
 
 <script>
   import TimeSelect from '@/components/TimeSelect';
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
+  const emptyAdvertisement = {
+    type: '',
+    token: '',
+    paymentMethod: '',
+    currency: 'USD',
+    amount: '',
+    limitMin: '',
+    limitMax: '',
+    enable: 1,
+    paymentWindow: '',
+    openingHours: [0,1,2,3,4,5,6].map(i => ({enable: true, start: '', end: ''})),
+    terms: ''
+  };
+
   export default {
     layout: 'coreui',
     components: {TimeSelect},
     data() {
       return {
-        advertisement: {}
+        advertisement: {...emptyAdvertisement},
+        registerErrors: []
       }
     },
     computed: {
-        ... mapGetters('global',['cryptoTokens', 'currencies'])
+        ... mapGetters('global',['cryptoTokens', 'currencies', 'allPaymentMethods'])
     },
     methods: {
-      onAvatarSelect() {
-        this.$toast.success('your avatar changed successfully');
+        ...mapActions('global',['registerNewAdvertisement']),
+      async createAdv() {
+        //alert(JSON.stringify(this.advertisement, null, 2));
+        let response = await this.registerNewAdvertisement(this.advertisement);
+        if(response.success){
+          this.advertisement = {...emptyAdvertisement};
+          this.$toast.success('Advertisement created successfully');
+        }else{
+          if(response.errors && response.errors.length > 0)
+            this.registerErrors = response.errors;
+          else{
+            this.registerErrors = 'Server side error';
+          }
+          this.$refs.errorsModal.show();
+        }
+      },
+      toggleDayEnable(index, clickEvent){
+        clickEvent.preventDefault();
+        this.advertisement.openingHours[index].enable = this.advertisement.openingHours[index].enable === false;
       }
     }
   }

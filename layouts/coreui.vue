@@ -41,9 +41,11 @@
 //      console.log('curencies: ', cc);
       let cn = await this.loadCountries();
 //      console.log('countries: ', cn);
+      let cpml = await this.loadPaymentMethods();
+//      console.log('countries: ', cpml);
     },
     methods: {
-        ... mapActions('global',['loadCryptoTokens','loadCurrencies','loadCountries'])
+        ... mapActions('global',['loadCryptoTokens','loadCurrencies','loadCountries','loadPaymentMethods'])
     }
   }
 </script>

@@ -2,13 +2,13 @@
   <BaseModal title="Start Trade" ref="modal" :floatHeight="true">
     <div :class="$style.loginModalContent">
       <h6>Enter message to Seller</h6>
-      <textarea rows="5" class="form-control">
+      <textarea rows="5" class="form-control" v-model="textMessage">
       </textarea>
     </div>
     <div class="pd5 bdt-1">
-      <BaseLink :to="{name: 'buy-id', params:{id: '4a67b3233d7a'}}">
-        <button class="btn btn-block btn-primary btn-sm" type="button" >Start Trade</button>
-      </BaseLink>
+      <!--<BaseLink :to="{name: 'buy-id', params:{id: '4a67b3233d7a'}}">-->
+      <!--</BaseLink>-->
+        <button @click="callSuccess" class="btn btn-block btn-primary btn-sm" type="button" >Start Trade</button>
     </div>
   </BaseModal>
 </template>
@@ -17,8 +17,10 @@
   import {mapState, mapActions} from 'vuex';
 
   export default {
+    props:['onSuccess'],
     data() {
       return {
+        textMessage: '',
       }
     },
     computed: {
@@ -27,6 +29,12 @@
       show(event) {
         let modal = this.$refs.modal;
         modal.show(event);
+      },
+      hide() {
+        this.$refs.modal.hide();
+      },
+      callSuccess(){
+          this.$emit('onSuccess',this.textMessage);
       }
     }
   }

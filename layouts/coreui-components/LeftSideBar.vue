@@ -38,11 +38,11 @@
             <i class="fa fa-buysellads"></i> Advertisements</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
-              <a class="nav-link" href="/advertisements">
+              <a class="nav-link" href="/advertisement">
                 <i class="nav-icon icon-puzzle"></i> List</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/advertisements/new">
+              <a class="nav-link" href="/advertisement/new">
                 <i class="nav-icon icon-puzzle"></i> New</a>
             </li>
           </ul>

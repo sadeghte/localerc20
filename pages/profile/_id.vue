@@ -164,8 +164,8 @@
 
 <script>
   import {mapState, mapGetters} from 'vuex';
-  import UpdateUsername from '../components/UpdateUsername';
-  import UpdateEmail from '../components/UpdateEmail';
+  import UpdateUsername from '../../components/UpdateUsername';
+  import UpdateEmail from '../../components/UpdateEmail';
   export default {
     middleware: 'auth',
     layout: 'coreui',

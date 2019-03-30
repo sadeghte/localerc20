@@ -3,6 +3,7 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'universal',
+  ssr: true,
 
   /*
   ** Headers of the page
@@ -55,6 +56,7 @@ module.exports = {
   plugins: [
     '~/plugins/global-component-loader.js',
     '~/plugins/v-viewer.js',
+    '~/plugins/v-tooltip.js',
   ],
 
   /*

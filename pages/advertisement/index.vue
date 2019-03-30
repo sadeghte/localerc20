@@ -11,7 +11,7 @@
                   <label for="select3">Type</label>
                   <select v-model="filter.type" class="form-control" id="select3" name="select3">
                     <option value="">All types</option>
-                    <option value="sale">Sale</option>
+                    <option value="sell">Sell</option>
                     <option value="buy">Buy</option>
                   </select>
                 </div>
@@ -56,14 +56,15 @@
               </tr>
               </thead>
               <tbody>
-
               <tr v-for="row in getFilteredAdvertisements">
-                <td><a href="#">{{row.id}}</a></td>
+                <td>
+                  <BaseLink :to="{name: 'advertisement-view-id', params: {id: row._id}}">{{row._id}}</BaseLink>
+                </td>
                 <td><span class="badge" :class="row.type.toLowerCase()=='buy' ? 'badge-success' : 'badge-danger'">{{row.type}}</span></td>
-                <td><img class="transaction-coin-icon" :src="row.token.icon" alt=""> {{row.token.title}}</td>
-                <td>{{row.limit.min}} - {{row.limit.max}}</td>
-                <td>{{row.payment.method}}</a></td>
-                <td>{{row.price}}</td>
+                <td><img class="transaction-coin-icon" :src="'/erc20-tokens/' + row.token.code + '.png'" alt=""> {{row.token.title}}</td>
+                <td>{{row.limitMin}} - {{row.limitMax}}</td>
+                <td>{{row.paymentMethod.title}}</a></td>
+                <td>{{row.amount}}</td>
                 <td>
                   <label class="switch switch-sm switch-label switch-outline-success-alt mb-0">
                     <input class="switch-input" type="checkbox" :checked="row.enable">
@@ -107,6 +108,7 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex';
   export default {
     layout: 'coreui',
     data() {
@@ -116,95 +118,27 @@
           token: '',
           paymentMethod: ''
         },
-        advertisements: [
-          {
-            id: 'f74f7g575744',
-            type: 'Buy',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Cash payment', window: '04:30'},
-            price: 46.58,
-            enable: true,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Sale',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Pay-Pal', window: '04:30'},
-            price: 46.58,
-            enable: true,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Buy',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Method of payment', window: '04:30'},
-            price: 46.58,
-            enable: false,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Sale',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Payment Method #3', window: '04:30'},
-            price: 46.58,
-            enable: false,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Buy',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Payment', window: '04:30'},
-            price: 46.58,
-            enable: false,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Sale',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Method of payment', window: '04:30'},
-            price: 46.58,
-            enable: true,
-          },
-          {
-            id: 'f74f7g575744',
-            type: 'Buy',
-            token: {
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-            },
-            limit: {min: 0, max: 100},
-            payment: {method: 'Method of payment', window: '04:30'},
-            price: 46.58,
-            enable: false,
-          },
-        ]
+        listInRefresh: false,
+        // advertisements: [...templateAdvertisements]
       }
     },
+//    asyncData ({ params, $axios }) {
+//      return $axios.post(`/api/v0.1/advertisements/list`)
+//          .then(({data}) => {
+//            if(data.success)
+//              return {advertisements: data.advertisements};
+//            return {trades: []}
+//          })
+//    },
+    async mounted(){
+      this.listInRefresh = true;
+      await this.loadUserAdvertisementList();
+      this.listInRefresh = false;
+    },
     computed: {
+      ...mapGetters('global', {
+        advertisements: 'userAdvertisementList'
+      }),
       getFilteredAdvertisements(){
         let filtered = this.advertisements;
         if(!!this.filter.type) {
@@ -226,8 +160,95 @@
       }
     },
     methods: {
+      ...mapActions('global',['loadUserAdvertisementList']),
     }
   }
+  const templateAdvertisements = [
+    {
+      id: 'f74f7g575744',
+      type: 'Buy',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Cash payment', window: '04:30'},
+      price: 46.58,
+      enable: true,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Sale',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Pay-Pal', window: '04:30'},
+      price: 46.58,
+      enable: true,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Buy',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Method of payment', window: '04:30'},
+      price: 46.58,
+      enable: false,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Sale',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Payment Method #3', window: '04:30'},
+      price: 46.58,
+      enable: false,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Buy',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Payment', window: '04:30'},
+      price: 46.58,
+      enable: false,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Sale',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Method of payment', window: '04:30'},
+      price: 46.58,
+      enable: true,
+    },
+    {
+      id: 'f74f7g575744',
+      type: 'Buy',
+      token: {
+        icon: '/erc20-tokens/dai_stablecoin.png',
+        title: 'Dai Stable Coin (DAI)',
+      },
+      limit: {min: 0, max: 100},
+      payment: {method: 'Method of payment', window: '04:30'},
+      price: 46.58,
+      enable: false,
+    },
+  ];
 </script>
 
 <style>

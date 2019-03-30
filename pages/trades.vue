@@ -14,21 +14,22 @@
                 <th>Type</th>
                 <th>Token</th>
                 <th>Token Price</th>
-                <th>Amount</th>
+                <th>Token Count</th>
               </tr>
               </thead>
               <tbody>
-              <tr v-for="row in transactions">
-                <td><a href="/buy/Z4dgddCnx1P15">{{row.id}}</a></td>
-                <td>{{row.date}}</td>
-                <td><a href="/profile">{{row.trader}}</a></td>
-                <td><span class="badge" :class="row.type.toLowerCase()=='sell' ? 'badge-success' : 'badge-danger'">{{row.type}}</span></td>
-                <td><img class="transaction-coin-icon" :src="row.token.icon" alt=""> {{row.token.title}}</td>
-                <td>{{row.token.price}}</td>
-                <td>{{row.amount}}</td>
+              <tr v-for="row in trades">
+                <td><BaseLink :to="{name: 'trade-id', params: {id: row._id}}">{{row.id}}</BaseLink></td>
+                <td>{{row.createdAt}}</td>
+                <td><BaseLink :to="{name: 'profile-id', params: {id: row.advertisementOwner._id}}">{{row.advertisementOwner.username}}</BaseLink></td>
+                <td><span class="badge" :class="row.advertisement.type.toLowerCase()=='sell' ? 'badge-success' : 'badge-danger'">{{row.advertisement.type}}</span></td>
+                <td><img class="transaction-coin-icon" :src="'/erc20-tokens/' + row.advertisement.token.code + '.png'" alt=""> {{row.advertisement.token.title}} ({{row.advertisement.token.code}})</td>
+                <td>{{row.advertisement.amount}}</td>
+                <td>{{row.tokenCount}}</td>
               </tr>
               </tbody>
             </table>
+            <!--<pre>{{JSON.stringify(trades, null, 2)}}</pre>-->
             <ul class="pagination">
               <li class="page-item">
                 <a class="page-link" href="#">Prev</a>
@@ -58,6 +59,7 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex';
   export default {
     layout: 'coreui',
     data() {
@@ -143,6 +145,14 @@
           },
         ]
       }
+    },
+    asyncData ({ params, $axios }) {
+      return $axios.post(`/api/v0.1/trade/list`)
+          .then(({data}) => {
+            if(data.success)
+              return {trades: data.trades};
+            return {trades: []}
+          })
     },
     methods: {
       copyWalletAddress(){

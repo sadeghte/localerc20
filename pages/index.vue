@@ -59,50 +59,12 @@
             <td></td>
             <td></td>
           </tr>
-          <tr v-for="seller in sellers">
-            <td class="text-left">
-              <div class="avatar">
-                <img class="img-avatar" :src="seller.avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status" :class="['badge-' + seller.status]"></span>
-              </div>
-            </td>
-            <td>
-              <div>{{seller.name}}</div>
-              <div class="small text-muted">
-                <span>{{seller.age}}</span> | Registered: {{seller.registered}}</div>
-            </td>
-            <td class="text-left">
-              <i class="flag-icon h4 mb-0" :class="['flag-icon-' + seller.country]" id="us" title="us"></i>
-            </td>
-            <td>
-              <div class="clearfix">
-                <div class="float-left">
-                  <strong>{{seller.score}}%</strong>
-                </div>
-                <div class="float-right">
-                  <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                </div>
-              </div>
-              <LinearProgress v-model="seller.score" :status="seller.status" />
-            </td>
-            <td class="text-left">
-              <img class="cc-token-avatar" :src="seller.token.icon">
-              <span>{{seller.token.title}}</span>
-            </td>
-            <td class="text-success text-left">
-              <div><strong>{{seller.token.price}}</strong></div>
-              <strong>{{seller.token.currency}}</strong>
-            </td>
-            <td>
-              <div class="small text-muted">Last login</div>
-              <strong>10 sec ago</strong>
-            </td>
-            <td>
-              <BaseLink :to="{name:'ad-id', params:{id: 'test_id'}}">
-                <button class="btn btn-block btn-outline-primary" type="button">Buy</button>
-              </BaseLink>
-            </td>
-          </tr>
+          <TradeSearchItem
+              v-for="advertisement in sellAdvertisements"
+              :key="advertisement._id"
+              :advertisement="advertisement"
+              buttonTitle="Buy"
+          />
           </tbody>
         </table>
         <div class="text-right">
@@ -138,50 +100,11 @@
             <td></td>
             <td></td>
           </tr>
-          <tr v-for="seller in sellers">
-            <td class="text-left">
-              <div class="avatar">
-                <img class="img-avatar" :src="seller.avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status" :class="['badge-' + seller.status]"></span>
-              </div>
-            </td>
-            <td>
-              <div>{{seller.name}}</div>
-              <div class="small text-muted">
-                <span>{{seller.age}}</span> | Registered: {{seller.registered}}</div>
-            </td>
-            <td class="text-left">
-              <i class="flag-icon h4 mb-0" :class="['flag-icon-' + seller.country]" id="us" title="us"></i>
-            </td>
-            <td>
-              <div class="clearfix">
-                <div class="float-left">
-                  <strong>{{seller.score}}%</strong>
-                </div>
-                <div class="float-right">
-                  <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                </div>
-              </div>
-              <LinearProgress v-model="seller.score" :status="seller.status" />
-            </td>
-            <td class="text-left">
-              <img class="cc-token-avatar" :src="seller.token.icon">
-              <span>{{seller.token.title}}</span>
-            </td>
-            <td class="text-success text-left">
-              <div><strong>{{seller.token.price}}</strong></div>
-              <strong>{{seller.token.currency}}</strong>
-            </td>
-            <td>
-              <div class="small text-muted">Last login</div>
-              <strong>10 sec ago</strong>
-            </td>
-            <td>
-              <BaseLink :to="{name:'ad-id', params:{id: 'test_id'}}">
-                <button class="btn btn-block btn-outline-primary" type="button">Sell</button>
-              </BaseLink>
-            </td>
-          </tr>
+          <TradeSearchItem
+              v-for="advertisement in buyAdvertisements"
+              :key="advertisement._id"
+              :advertisement="advertisement"
+          />
           </tbody>
         </table>
         <div class="text-right">
@@ -196,13 +119,15 @@
 </template>
 
 <script>
-  import LinearProgress from '~/components/LinearProgress';
+  import TradeSearchItem from '~/components/TradeSearchItem';
   import TabBox from '~/components/TabBox';
+  import {mapActions, mapGetters, mapState} from 'vuex';
   export default {
     layout: 'coreui-no-sidemenu',
-    components: {LinearProgress, TabBox},
+    components: {TabBox, TradeSearchItem},
     data() {
       return {
+        searchInRefresh: false,
         sellers: [
           {
             name: "Yiorgos Avraamu",
@@ -214,6 +139,7 @@
             score: 50,
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
+              code: 'DAI',
               title: 'Dai Stable Coin (DAI)',
               price: '1.05',
               currency: 'USD'
@@ -231,6 +157,7 @@
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
               title: 'Dai Stable Coin (DAI)',
+              code: 'DAI',
               price: '1.05',
               currency: 'USD'
             },
@@ -247,6 +174,7 @@
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
               title: 'Dai Stable Coin (DAI)',
+              code: 'DAI',
               price: '1.05',
               currency: 'USD'
             },
@@ -263,6 +191,7 @@
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
               title: 'Dai Stable Coin (DAI)',
+              code: 'DAI',
               price: '1.05',
               currency: 'USD'
             },
@@ -279,6 +208,7 @@
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
               title: 'Dai Stable Coin (DAI)',
+              code: 'DAI',
               price: '1.05',
               currency: 'USD'
             },
@@ -295,6 +225,7 @@
             token: {
               icon: '/erc20-tokens/dai_stablecoin.png',
               title: 'Dai Stable Coin (DAI)',
+              code: 'DAI',
               price: '1.05',
               currency: 'USD'
             },
@@ -302,6 +233,20 @@
           },
         ]
       }
+    },
+    computed:{
+      ...mapState('global', {
+        sellAdvertisements: 'sellSearchResult',
+        buyAdvertisements: 'buySearchResult'
+      }),
+    },
+    async mounted(){
+      this.searchInRefresh = true;
+      await this.search();
+      this.searchInRefresh = false;
+    },
+    methods: {
+        ...mapActions('global', ['search'])
     }
   }
 

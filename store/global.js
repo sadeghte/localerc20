@@ -186,4 +186,24 @@ export const actions = {
           return err;
         })
   },
+  fakeDeposit({dispatch, commit, state, rootState}, {token, amount}) {
+    return this.$axios.post('/api/v0.1/user/fake-deposit', {token, amount})
+        .then(({data}) => {
+          return data
+        }).catch(err => {
+          if(err.response && err.response.data)
+            return err.response.data;
+          return err;
+        })
+  },
+  withdraw({dispatch, commit, state, rootState}, {token, amount, to}) {
+    return this.$axios.post('/api/v0.1/user/withdraw', {token, amount, to})
+        .then(({data}) => {
+          return data
+        }).catch(err => {
+          if(err.response && err.response.data)
+            return err.response.data;
+          return err;
+        })
+  },
 }

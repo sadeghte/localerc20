@@ -10,7 +10,7 @@
               <tr>
                 <td>Address</td>
                 <td>
-                  <span class="wallet-address">3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN</span>
+                  <span class="wallet-address">{{$auth.user.address}}</span>
                   <button class="btn btn-block btn-outline-dark copy-button" type="button" @click="copyWalletAddress">
                     <i class="fa fa-copy fa-lg"></i>
                   </button>
@@ -22,21 +22,34 @@
             <table class="table table-responsive-sm table-sm">
               <thead>
               <tr>
-                <th>Date</th>
+                <!--<th>Date</th>-->
                 <th>trade</th>
-                <th>From/To</th>
+                <th>From</th>
+                <th>To</th>
                 <th>Type</th>
+                <th>status</th>
                 <th>Token</th>
                 <th>Amount</th>
               </tr>
               </thead>
               <tbody>
               <tr v-for="row in transactions">
-                <td>{{row.date}}</td>
-                <td><a href="/buy/fdfdfdfd">{{row.trade}}</a></td>
-                <td><a href="#">{{row.address.substr(0,12) + ' ...'}}</a></td>
-                <td><span class="badge" :class="row.type.toLowerCase()=='in' ? 'badge-success' : 'badge-danger'">{{row.type}}</span></td>
-                <td><img class="transaction-coin-icon" :src="row.token.icon" alt=""> {{row.token.title}}</td>
+                <!--<td>{{row.txTime}}</td>-->
+                <td><a href="/buy/fdfdfdfd">{{row._id.substr(0,8) + '...'}}</a></td>
+                <td><a href="#">{{row.from.substr(0,12) + ' ...'}}</a></td>
+                <td><a href="#">{{row.to.substr(0,12) + ' ...'}}</a></td>
+                <td>
+                  <span
+                    class="badge"
+                    :class="(row.type.toLowerCase()=='deposit' || row.type.toLowerCase()=='buy') ? 'badge-success' : 'badge-danger'"
+                  >{{row.type}}</span>
+                </td>
+                <td>
+                  <span>{{row.status}}</span>
+                </td>
+                <td>
+                  <img class="transaction-coin-icon" :src="'/erc20-tokens/' + row.token + '.png'" alt="">
+                  <span>&nbsp;{{getTokenByCode(row.token).title}}</span></td>
                 <td>{{row.amount}}</td>
               </tr>
               </tbody>
@@ -67,41 +80,63 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <div class="card-header"><strong>Token Count</strong></div>
+          <div class="card-header"><strong>Balance</strong></div>
           <div class="card-body">
             <table class="table-coin-count">
               <tbody>
-              <tr>
+              <tr v-for="(amount, code) in balance">
                 <td>
-                  <img class="cc-token-avatar" src="/erc20-tokens/dai_stablecoin.png">
-                  <span>Dai stable coin (DAI)</span>
+                  <img class="cc-token-avatar" :src="'/erc20-tokens/'+code+'.png'">
+                  <span>{{getTokenByCode(code).title}} ({{code}})</span>
                 </td>
-                <td>427</td>
+                <td>{{amount}}</td>
               </tr>
               </tbody>
             </table>
+            <button @click="$refs.depositModal.show($event)" style="margin-top: 1em" type="button" class="btn btn-block btn-primary">Deposit</button>
+            <BaseModal title="Fake deposit" ref="depositModal">
+              <div style="padding: 1em">
+                <div class="form-group">
+                  <label>Select token to deposit</label>
+                  <select v-model="depositData.token" class="form-control">
+                    <option v-for="token in cryptoTokens" :value="token.code">{{token.title}} ({{token.code}})</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>select token amount</label>
+                  <input v-model="depositData.amount" class="form-control" type="number">
+                </div>
+                <div class="form-group">
+                  <button @click="doFakeDeposit" type="button" class="btn btn-block btn-primary">Deposit</button>
+                </div>
+              </div>
+            </BaseModal>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><strong>Send token</strong></div>
+          <div class="card-header"><strong>Withdraw</strong></div>
           <div class="card-body">
             <div class="form-group">
               <label for="company">Send to address</label>
-              <input class="form-control" id="company" type="text" placeholder="3C5ZYoxLko8Z4dgdd...">
+              <input v-model="withdrawData.to" class="form-control" id="company" type="text" placeholder="3C5ZYoxLko8Z4dgdd...">
             </div>
             <div class="form-group">
-              <label for="company">Token</label>
-              <select class="form-control" id="ccyear">
-                <option>Token #1</option>
-                <option>Token #2</option>
-                <option>Token #3</option>
+              <label>Token</label>
+              <select v-model="withdrawData.token" class="form-control">
+                <option v-for="(amount, token) in balance" :value="token">{{getTokenByCode(token).title}} ({{token}})</option>
               </select>
             </div>
             <div class="form-group">
               <label for="company">Amount</label>
-              <input class="form-control" id="company" type="number" placeholder="0.0000">
+              <input
+                  v-model="withdrawData.amount"
+                  class="form-control"
+                  id="company"
+                  type="number"
+                  placeholder="0.0000"
+              >
             </div>
-            <button class="btn btn-block btn-primary" type="button">Send</button>
+            <button @click="doWithdraw" class="btn btn-block btn-primary" type="button">Withdraw</button>
           </div>
         </div>
       </div>
@@ -110,102 +145,78 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex';
   export default {
     layout: 'coreui',
     data() {
       return {
-        transactions: [
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'In',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'In',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'Out',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'Out',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'In',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            date: '2018-09-21',
-            address: '3C5ZYoxLko8Z4dgddCnx1P15VhC76pXdfN',
-            type: 'Out',
-            trade: 'ab568d7768f6',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-        ]
+        depositData: {
+          token: null,
+          amount: ''
+        },
+        withdrawData: {
+          token: null,
+          to: "0xd86ffb989f06150e17c5b80c2a3751f16da50a61",
+          amount: ''
+        },
+        transactions: [],
+        balance: {}
       }
     },
+    asyncData ({ params, $axios }) {
+      return $axios.post(`/api/v0.1/user/transactions`)
+          .then(({data}) => {
+            if(data.success)
+              return {transactions: data.transactions, balance: data.balance};
+            return {transactions: [], balance: {}}
+          })
+    },
+    computed: {
+        ...mapGetters('global', ['cryptoTokens']),
+    },
     methods: {
+      ...mapActions('global',['fakeDeposit', 'withdraw']),
       copyWalletAddress(){
-        this.$toast.success('Address copied successfully.')
+        this.$copyText(this.$auth.user.address)
+            .then(e => {
+              this.$toast.success('Address copied successfully.');
+            })
+            .catch(e => {
+              this.$toast.error('Error on copying address.');
+            })
+      },
+      async doFakeDeposit(){
+        if(!this.depositData.token || parseInt(this.depositData.amount)===0)
+          return alert('Enter token and amount to deposit');
+        let response = await this.fakeDeposit(this.depositData);
+        if(response.success){
+          this.transactions = response.transactions;
+          this.balance = response.balance;
+          this.depositData = {token: null, amount: ''};
+          this.$refs.depositModal.hide();
+        }else{
+          alert(response.message || "Server side error");
+        }
+      },
+      async doWithdraw(){
+        let response = await this.withdraw(this.withdrawData);
+        if(response.success){
+          this.transactions = response.transactions;
+          this.balance = response.balance;
+          this.withdrawData = {to: '0xd86ffb989f06150e17c5b80c2a3751f16da50a61', token: null, amount: ''};
+        }else{
+          alert(response.message || "Server side error");
+        }
+      },
+      getTokenByCode(code){
+        return this.cryptoTokens.find(t => t.code==code) || {code, title: code};
       }
     }
   }
 </script>
 
 <style>
-  .cc-token-avatar{width: 30px; height: 30px}
+  .cc-token-avatar{width: 20px; height: 20px}
   .table-coin-count{width: 100%}
   .table-coin-count td{
     padding: 0.5em 1em;

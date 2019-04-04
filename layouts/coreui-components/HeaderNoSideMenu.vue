@@ -1,12 +1,10 @@
 <template>
   <header class="app-header navbar">
     <LoginModal ref="loginModal"/>
-
     <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto h-100" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <img class="navbar-brand-full" src="/coreui/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
       <img class="navbar-brand-minimized" src="/coreui/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
     </a>
@@ -19,6 +17,9 @@
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Post a trade</a>
+      </li>
+      <li class="nav-item px-3">
+        <a class="nav-link" href="/wallet">Deposit</a>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Help</a>
@@ -47,7 +48,7 @@
         </a>
       </li>
       <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/profile">
           {{fullName}}
         </a>
       </li>
@@ -68,6 +69,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link px-3" href="#">Post a trade</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#">Deposit</a>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3" href="#">Help</a>

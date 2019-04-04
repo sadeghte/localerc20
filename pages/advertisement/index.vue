@@ -34,7 +34,7 @@
         <div class="card">
           <div class="card-header">
             <strong>Advertisements</strong>
-            <a href="/advertisements/new">
+            <a href="/advertisement/new">
               <button class="btn btn-sm btn-primary pull-right" type="submit">
                 <i class="fa fa-plus-square"></i>
                 <span> New Advertisement</span>

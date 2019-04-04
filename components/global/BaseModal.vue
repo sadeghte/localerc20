@@ -217,7 +217,7 @@
     -webkit-transform: translate(-50%, -50%);
     border-radius: 5px;
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     max-width: 30em;
     max-height: 40em;
     display: flex;

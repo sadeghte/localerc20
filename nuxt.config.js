@@ -57,6 +57,7 @@ module.exports = {
     '~/plugins/global-component-loader.js',
     '~/plugins/v-viewer.js',
     '~/plugins/v-tooltip.js',
+    '~/plugins/vue-clipboard.js',
   ],
 
   /*

@@ -72,9 +72,10 @@
                   </label>
                 </td>
                 <td>
-                  <BaseLink :to="{name: 'advertisements-edit-id',params:{id: row.id}}">
-                    <button class="btn btn-sm btn-primary" type="button">edit</button>
+                  <BaseLink :to="{name: 'advertisement-edit-id',params:{id: row._id}}">
+                    <button class="btn btn-sm btn-primary" style="padding: 0px 0.25em" type="button">edit</button>
                   </BaseLink>
+                  <button class="btn btn-sm btn-danger" style="padding: 0px 0.25em" type="button">delete</button>
                 </td>
               </tr>
               </tbody>

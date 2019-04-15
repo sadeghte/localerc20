@@ -10,16 +10,16 @@
     </a>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Quick Buy</a>
+        <BaseLink _class="nav-link" :to="{name: 'search', query: {type: 'sell'}}">Quick Buy</BaseLink>
       </li>
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Quick Sell</a>
+        <BaseLink _class="nav-link" :to="{name: 'search', query: {type: 'buy'}}">Quick Sell</BaseLink>
       </li>
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Post a trade</a>
+        <BaseLink _class="nav-link" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
       </li>
       <li class="nav-item px-3">
-        <a class="nav-link" href="/wallet">Deposit</a>
+        <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Deposit</BaseLink>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Help</a>
@@ -40,6 +40,9 @@
         <a class="nav-link" href="#" @click="logout()">
           Log out
         </a>
+      </li>
+      <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
+        <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Wallet</BaseLink>
       </li>
       <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#">
@@ -68,10 +71,10 @@
           <a class="nav-link px-3" href="#">Quick Sell</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3" href="#">Post a trade</a>
+          <BaseLink _class="nav-link px-3" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3" href="#">Deposit</a>
+          <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Deposit</BaseLink>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3" href="#">Help</a>

@@ -21,10 +21,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
-      target: {
-        type: String,
-        default: '_self'
-      }
+    target: {
+      type: String,
+      default: '_self'
+    },
+    _class: {
+      type: String,
+      default: ""
+    }
   },
   computed: {
     routerLinkTo({ name, params }) {
@@ -79,10 +83,10 @@ export default {
 </script>
 
 <template>
-  <a v-if="href" v-bind="$attrs" :href="href" target="_blank">
+  <a :class="_class" v-if="href" v-bind="$attrs" :href="href" target="_blank">
       <slot/>
   </a>
-  <nuxt-link v-else v-bind="$attrs" :to="routerLinkTo" :target="target">
+  <nuxt-link :class="_class" v-else v-bind="$attrs" :to="routerLinkTo" :target="target">
       <slot/>
   </nuxt-link>
 </template>

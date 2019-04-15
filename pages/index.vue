@@ -2,37 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-12">
-        <TabBox :tabs="['QUICK BUY', 'QUICK SELL']">
-          <div class="row">
-            <div class="col-sm-2">
-              <input type="text" class="form-control" placeholder="Amount">
-            </div>
-            <div class="col-sm-2">
-              <select class="form-control">
-                <option>USD</option>
-                <option>IRR</option>
-                <option>UAE</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
-              <select class="form-control">
-                <option>United State</option>
-                <option>Islamic Republic Of Iran</option>
-                <option>United Arabic Emirate</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
-              <select class="form-control">
-                <option>Payment method #1</option>
-                <option>Payment method #2</option>
-                <option>Payment method #3</option>
-              </select>
-            </div>
-            <div class="col-sm-2">
-              <button class="form-control btn btn-success">Search</button>
-            </div>
-          </div>
-        </TabBox>
+        <SearchBox @onSearch="onSearchButtonClick"/>
         <table class="table table-responsive-xs table-hover table-outline mb-0">
           <thead class="thead-light">
           <tr>
@@ -41,7 +11,7 @@
             </th>
             <th>Seller</th>
             <th class="text-left">Country</th>
-            <th>Feedback Score</th>
+            <!--<th>Feedback Score</th>-->
             <th class="text-left">Token</th>
             <th class="text-left">Price</th>
             <th>Activity</th>
@@ -53,7 +23,7 @@
             <td></td>
             <td><input class="form-control" placeholder="type to filter"></td>
             <td><input class="form-control" placeholder="type to filter"></td>
-            <td><input class="form-control" disabled></td>
+            <!--<td><input class="form-control" disabled></td>-->
             <td><input class="form-control" placeholder="type to filter"></td>
             <td></td>
             <td></td>
@@ -82,7 +52,7 @@
             </th>
             <th>Buyer</th>
             <th class="text-left">Country</th>
-            <th>Feedback Score</th>
+            <!--<th>Feedback Score</th>-->
             <th class="text-left">Token</th>
             <th class="text-left">Price</th>
             <th>Activity</th>
@@ -94,7 +64,7 @@
             <td></td>
             <td><input class="form-control" placeholder="type to filter"></td>
             <td><input class="form-control" placeholder="type to filter"></td>
-            <td><input class="form-control" disabled></td>
+            <!--<td><input class="form-control" disabled></td>-->
             <td><input class="form-control" placeholder="type to filter"></td>
             <td></td>
             <td></td>
@@ -120,11 +90,12 @@
 
 <script>
   import TradeSearchItem from '~/components/TradeSearchItem';
+  import SearchBox from '~/components/SearchBox';
   import TabBox from '~/components/TabBox';
   import {mapActions, mapGetters, mapState} from 'vuex';
   export default {
     layout: 'coreui-no-sidemenu',
-    components: {TabBox, TradeSearchItem},
+    components: {TabBox, TradeSearchItem, SearchBox},
     data() {
       return {
         searchInRefresh: false,
@@ -242,11 +213,14 @@
     },
     async mounted(){
       this.searchInRefresh = true;
-      await this.search();
+      await this.homeSearch();
       this.searchInRefresh = false;
     },
     methods: {
-        ...mapActions('global', ['search'])
+        ...mapActions('global', ['homeSearch']),
+      onSearchButtonClick(query){
+        this.$router.push({name: 'search', query})
+      },
     }
   }
 

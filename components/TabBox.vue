@@ -26,6 +26,7 @@
     methods: {
       selectTab(index){
         this.selected = index;
+//        this.$emit('onTabChanged',index);
       },
       tabLinkClass: function(index){
         switch(index){
@@ -33,6 +34,15 @@
           case (this.tabs.length-1): return {'text-left': true};
           default: return {'text-center': true};
         }
+      },
+      switchToTab: function (index) {
+        if(index >=0 && index < this.tabs.length) {
+          this.selected = index;
+//          this.$emit('onTabChanged', index);
+        }
+      },
+      getSelectedIndex: function () {
+        return this.selected;
       }
     }
   }

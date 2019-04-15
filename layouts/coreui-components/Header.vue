@@ -15,11 +15,8 @@
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Quick Buy</a>
       </li>
-      <li class="nav-item px-3">
-        <a class="nav-link" href="#">Quick Sell</a>
-      </li>
-      <li class="nav-item px-3">
-        <a class="nav-link" href="#">Post a trade</a>
+      <li class="nav-item">
+        <BaseLink _class="nav-link px-3" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Deposit</a>
@@ -43,6 +40,9 @@
         <a class="nav-link" href="#" @click="logout()">
           Log out
         </a>
+      </li>
+      <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
+        <a class="nav-link" href="/wallet">Wallet</a>
       </li>
       <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#">

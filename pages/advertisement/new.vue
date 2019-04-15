@@ -258,8 +258,11 @@
         }else{
           if(response.errors && response.errors.length > 0)
             this.registerErrors = response.errors;
-          else{
-            this.registerErrors = 'Server side error';
+          else if(response.message){
+            this.registerErrors = [response.message];
+          }
+          else {
+            this.registerErrors = ['Server side error'];
           }
           this.$refs.errorsModal.show();
         }

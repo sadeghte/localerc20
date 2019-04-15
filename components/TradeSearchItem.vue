@@ -14,17 +14,17 @@
     <td class="text-left">
       <i class="flag-icon h4 mb-0" :class="['flag-icon-' + advertisement.user.country.toLowerCase()]" id="us" title="us"></i>
     </td>
-    <td>
-      <div class="clearfix">
-        <div class="float-left">
-          <strong>{{advertisement.user.score}}%</strong>
-        </div>
-        <div class="float-right">
-          <small class="text-muted">3 Star</small>
-        </div>
-      </div>
-      <LinearProgress v-model="advertisement.user.score" :status="userStatus(advertisement.user)" />
-    </td>
+    <!--<td>-->
+      <!--<div class="clearfix">-->
+        <!--<div class="float-left">-->
+          <!--<strong>{{advertisement.user.score}}%</strong>-->
+        <!--</div>-->
+        <!--<div class="float-right">-->
+          <!--<small class="text-muted">3 Star</small>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<LinearProgress v-model="advertisement.user.score" :status="userStatus(advertisement.user)" />-->
+    <!--</td>-->
     <td class="text-left">
       <img class="cc-token-avatar" :src="'/erc20-tokens/' + advertisement.token.code + '.png'">
       <span>{{advertisement.token.title}}</span>

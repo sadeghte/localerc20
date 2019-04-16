@@ -19,16 +19,6 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <!--<td><input class="form-control" disabled></td>-->
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
           <tr v-if="searchInProgress">
             <td colspan="8">
               <div class="progress">

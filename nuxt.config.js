@@ -10,6 +10,9 @@ module.exports = {
   */
   head: {
     title: pkg.name,
+    htmlAttrs: {
+      lang: 'en'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -17,6 +20,7 @@ module.exports = {
     ],
     script:[
       {src: "/coreui/vendors/jquery/js/jquery.min.js"},
+      {src: "/vendors/jquery/js/jquery.min.js"},
       {src: "/coreui/vendors/popper.js/js/popper.min.js"},
       {src: "/coreui/vendors/bootstrap/js/bootstrap.min.js"},
       {src: "/coreui/vendors/pace-progress/js/pace.min.js"},
@@ -90,7 +94,6 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      
     }
   },
 
@@ -113,7 +116,7 @@ module.exports = {
           login: {url: '/api/v0.1/auth/login', method: 'post', propertyName: 'token'},
           logout: {url: '/api/v0.1/auth/logout', method: 'post' },
           // logout: false,
-          user: {url: '/api/v0.1/user/info', method: 'post', propertyName: 'user'}
+          user: {url: '/api/v0.1/user/get-info', method: 'post', propertyName: 'user'}
         },
         tokenRequired: true,
         tokenType: 'bearer',

@@ -21,13 +21,13 @@
               <span class="fs-20 fx-basis-9">{{fullName}}</span>
               <span class="pfx-basis-1 number"><i class="fa fa-star fa-sm"><strong>&nbsp;9.8</strong></i></span>
             </div>
-            <h6>Small description</h6>
+            <h6>{{user.about}}</h6>
 
             <div class="tbl-info-item clr-orange-l">
               <div><img style="width: 1.2em" src="/imgs/brightid-av-1.jpg" alt=""></div>
               <span>BrightID&nbsp;Score:&nbsp;<strong class="clr-orange-l">{{user.brightIdScore}}</strong></span>
             </div>
-            <div class="">
+            <div v-if="false" class="">
               <button class="btn btn-outline-success mt-2 nomg text-left" type="button" aria-pressed="true">
                 <i class="fa fa-check-square fa-lg"></i>&nbsp;
                 <span>Trust</span>
@@ -72,23 +72,23 @@
             <div class="d-fx-ic">
               <h6 class="fx-basis-5">Location:</h6>
               <span class="fx-basis-5">
-                <i id="ir" title="us" class="flag-icon h6 mb-0 flag-icon-ir"></i>
-                <span>Iran, Fars, Shiraz</span>
+                <i v-if="!!user.country" id="ir" title="us" class="flag-icon h6 mb-0" :class="userCountryFlag"></i>
+                <span>{{userCountryName}}</span>
               </span>
             </div>
             <div class="d-fx-ic">
               <h6 class="fx-basis-5">Joined:</h6>
-              <span class="fx-basis-5">3 years ago</span>
+              <span class="fx-basis-5">{{userJoinDate}}</span>
             </div>
             <div class="d-fx-ic">
               <h6 class="fx-basis-5">Feedback score:</h6>
               <span class="fx-basis-5"><span class="badge badge-success">100 %</span></span>
             </div>
-            <div class="d-fx-ic">
+            <div v-if="false" class="d-fx-ic">
               <h6 class="fx-basis-5">Trusted By:</h6>
               <span class="fx-basis-5"><strong class="badge badge-success">5 person</strong></span>
             </div>
-            <div class="d-fx-ic">
+            <div v-if="false" class="d-fx-ic">
               <h6 class="fx-basis-5">Blocked By:</h6>
               <span class="fx-basis-5"><strong class="badge badge-success">not blocked yet</strong></span>
             </div>
@@ -130,7 +130,7 @@
         <!--</div>-->
       </div>
     </div>
-    <div class="row nosp mgb10 bd-1">
+    <div v-if="user._id === $auth.user._id" class="row nosp mgb10 bd-1">
       <div class="col-md-6 pd10">
         <UpdateUsername />
         <UpdateEmail />
@@ -142,6 +142,10 @@
         <div class="form-group">
           <label for="lastNameInput">Last name</label>
           <input class="form-control" v-model="lastName" id="lastNameInput" type="text" placeholder="Enter your last name">
+        </div>
+        <div class="form-group">
+          <label for="aboutInput">About</label>
+          <input class="form-control" v-model="about" id="aboutInput" type="text" placeholder="Enter small text about you">
         </div>
         <div class="form-group">
           <label for="select1">Country</label>
@@ -166,27 +170,50 @@
   import {mapState, mapGetters} from 'vuex';
   import UpdateUsername from '../../components/UpdateUsername';
   import UpdateEmail from '../../components/UpdateEmail';
+  import moment from 'moment';
+
   export default {
     middleware: 'auth',
     layout: 'coreui',
     components: {UpdateUsername, UpdateEmail},
     data() {
       return {
-        firstName: '',
-        lastName: '',
-        country: '',
-        mobile: '',
+        user: null
       }
     },
+    asyncData ({ params, $axios, app }) {
+//      if(params.id.toString() === app.store.$auth.user._id.toString())
+//        return Promise.resolve(app.store.$auth.user);
+      return $axios.post(`/api/v0.1/user/get-info`, {userId: params.id})
+          .then(({data}) => {
+            if(data.success)
+              return {user: data.user};
+            return {user: null}
+          })
+    },
     mounted(){
+      this.id = this.user._id;
       this.firstName = this.user.firstName;
       this.lastName = this.user.lastName;
+      this.about = this.user.about;
       this.country = this.user.country || 'US';
       this.mobile = this.user.mobile || '';
     },
     computed: {
-        ...mapState('auth', ['loggedIn', 'user', 'countries']),
+        ...mapState('auth', ['loggedIn', 'countries']),
         ...mapGetters('global', ['countries']),
+      userCountryFlag: function () {
+        return "flag-icon-" + this.user.country.toLowerCase();
+      },
+      userCountryName: function () {
+        let country = this.countries.find(c => c.code === this.user.country);
+        if(country)
+          return country.name;
+        return 'Not defined'
+      },
+      userJoinDate: function () {
+          return moment(this.user.createdAt).fromNow();
+      },
       usernameCrop: function () {
         if(this.user.username.length < 20)
           return this.user.username;
@@ -203,8 +230,8 @@
         this.$toast.success('your avatar changed successfully');
       },
       saveUserData(){
-        let {firstName, lastName, country, mobile} = this;
-        this.$axios.post('/api/v0.1/user/update', {firstName, lastName, country, mobile})
+        let {firstName, lastName, about, country, mobile} = this;
+        this.$axios.post('/api/v0.1/user/update', {firstName, lastName, about, country, mobile})
             .then(({data}) => {
               if(data.success){
                 this.$toast.success("Your profile updated successfully");

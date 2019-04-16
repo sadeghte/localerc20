@@ -1,6 +1,6 @@
 # localerc20
 
-> Bye ans sell ethereum ERC20 tokens
+> Bye and sell ethereum ERC20 tokens
 
 ## Build Setup
 

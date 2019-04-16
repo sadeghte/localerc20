@@ -16,7 +16,7 @@
             </div>
             <div class="tbl-info-item">
               <div><i class="fa fa-circle fa-lg" style="color: #4dbd74"></i></div>
-              <span>Last&nbsp;seen:&nbsp;<strong>2 minutes ago</strong></span>
+              <span>Last&nbsp;seen:&nbsp;<strong>{{userLastSeen}}</strong></span>
             </div>
             <div class="tbl-info-item">
               <div><i class="fa fa-flag fa-lg"></i></div>
@@ -38,11 +38,11 @@
               <div>&nbsp;</div>
               <span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>
             </div>
-            <div class="tbl-info-item">
+            <div v-if="false" class="tbl-info-item">
               <div><i class="fa fa-check-square fa-lg color-success"></i></div>
               <span>Trusted By:&nbsp;<strong class="badge badge-success">5 person</strong></span>
             </div>
-            <div class="tbl-info-item">
+            <div v-if="false" class="tbl-info-item">
               <div><i class="fa fa-minus-circle fa-lg color-danger"></i></div>
               <span>Blocked By:&nbsp;<strong class="badge badge-success">not blocked yet</strong></span>
             </div>
@@ -141,6 +141,8 @@
 <script>
   import TradeStartModal from '../../../components/TradeStartModal';
   import {mapGetters, mapActions} from 'vuex';
+  import moment from 'moment';
+
   export default {
     layout: 'coreui-no-sidemenu',
     components:{TradeStartModal},
@@ -202,6 +204,9 @@
           this.totalAmount = newVal;
         }
       },
+      userLastSeen: function(){
+        return moment(this.$auth.user.lastSeen).fromNow();
+      }
     },
     methods: {
       ...mapActions('global',['createTrade']),

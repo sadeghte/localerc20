@@ -19,16 +19,6 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <!--<td><input class="form-control" disabled></td>-->
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
           <TradeSearchItem
               v-for="advertisement in sellAdvertisements"
               :key="advertisement._id"
@@ -44,45 +34,6 @@
           </BaseLink>
         </div>
 
-        <table class="table table-responsive-sm table-hover table-outline mb-0">
-          <thead class="thead-light">
-          <tr>
-            <th class="text-left">
-              <i class="icon-people"></i>
-            </th>
-            <th>Buyer</th>
-            <th class="text-left">Country</th>
-            <!--<th>Feedback Score</th>-->
-            <th class="text-left">Token</th>
-            <th class="text-left">Price</th>
-            <th>Activity</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <!--<td><input class="form-control" disabled></td>-->
-            <td><input class="form-control" placeholder="type to filter"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <TradeSearchItem
-              v-for="advertisement in buyAdvertisements"
-              :key="advertisement._id"
-              :advertisement="advertisement"
-          />
-          </tbody>
-        </table>
-        <div class="text-right">
-          <a href="#">
-            <i class="fa fa-plus-circle fa-lg mt-2 mb-4"></i>
-            <span>See more options ...</span>
-          </a>
-        </div>
       </div>
     </div>
   </div>

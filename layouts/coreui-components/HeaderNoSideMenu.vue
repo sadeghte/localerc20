@@ -5,15 +5,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="/">
-      <img class="navbar-brand-full" src="/coreui/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
-      <img class="navbar-brand-minimized" src="/coreui/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
+      <img class="navbar-brand-full" src="/imgs/logo-small.png" width="89" height="25" alt="CoreUI Logo">
+      <img class="navbar-brand-minimized" src="/imgs/logo-no-text.png" width="30" height="30" alt="CoreUI Logo">
     </a>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
-        <BaseLink _class="nav-link" :to="{name: 'search', query: {type: 'sell'}}">Quick Buy</BaseLink>
-      </li>
-      <li class="nav-item px-3">
-        <BaseLink _class="nav-link" :to="{name: 'search', query: {type: 'buy'}}">Quick Sell</BaseLink>
+        <BaseLink _class="nav-link" :to="{name: 'search'}">Search</BaseLink>
       </li>
       <li class="nav-item px-3">
         <BaseLink _class="nav-link" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
@@ -65,10 +62,7 @@
     <div  class="navbar-collapse collapse" id="navbarSupportedContent">
       <ul class="nav navbar-nav nav-v d-lg-none">
         <li class="nav-item">
-          <a class="nav-link px-3" href="#">Quick Buy</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link px-3" href="#">Quick Sell</a>
+          <a class="nav-link px-3" href="/search">Search</a>
         </li>
         <li class="nav-item">
           <BaseLink _class="nav-link px-3" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>

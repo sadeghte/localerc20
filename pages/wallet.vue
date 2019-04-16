@@ -41,7 +41,7 @@
                 <td>
                   <span
                     class="badge"
-                    :class="(row.type.toLowerCase()=='deposit' || row.type.toLowerCase()=='buy') ? 'badge-success' : 'badge-danger'"
+                    :class="transactionTypeClass(row)"
                   >{{row.type}}</span>
                 </td>
                 <td>
@@ -210,6 +210,15 @@
       },
       getTokenByCode(code){
         return this.cryptoTokens.find(t => t.code==code) || {code, title: code};
+      },
+      transactionTypeClass(tx){
+        switch (tx.type.toLowerCase()){
+          case 'deposit': return 'badge-success';
+          case 'withdraw': return 'badge-danger';
+          case 'trade': return tx.to === this.$auth.user.address ? "badge-success" : "badge-danger";
+          default: return 'badge-secondary';
+        }
+        return (row.type.toLowerCase()=='' || row.type.toLowerCase()=='buy') ? 'badge-success' : 'badge-danger'
       }
     }
   }

@@ -21,7 +21,7 @@
               <tr v-for="row in trades">
                 <td><BaseLink :to="{name: 'trade-id', params: {id: row._id}}">{{row.id}}</BaseLink></td>
                 <td>{{row.createdAt}}</td>
-                <td><BaseLink :to="{name: 'profile-id', params: {id: row.advertisementOwner._id}}">{{row.advertisementOwner.username}}</BaseLink></td>
+                <td><BaseLink :to="{name: 'profile-id', params: {id: extractTrader(row)._id}}">{{extractTrader(row).username}}</BaseLink></td>
                 <td><span class="badge" :class="row.advertisement.type.toLowerCase()=='sell' ? 'badge-success' : 'badge-danger'">{{row.advertisement.type}}</span></td>
                 <td><img class="transaction-coin-icon" :src="'/erc20-tokens/' + row.advertisement.token.code + '.png'" alt=""> {{row.advertisement.token.title}} ({{row.advertisement.token.code}})</td>
                 <td>{{row.advertisement.amount}}</td>
@@ -64,86 +64,7 @@
     layout: 'coreui',
     data() {
       return {
-        transactions: [
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Sell',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Buy',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Sell',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Sell',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Buy',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-          {
-            id: 'Z4dgddCnx1P15',
-            date: '2018-09-21',
-            trader: 'User#N',
-            type: 'Buy',
-            token:{
-              icon: '/erc20-tokens/dai_stablecoin.png',
-              title: 'Dai Stable Coin (DAI)',
-              price: '1.05',
-              currency: 'USD'
-            },
-            amount: 45,
-          },
-        ]
+        trades: []
       }
     },
     asyncData ({ params, $axios }) {
@@ -155,8 +76,11 @@
           })
     },
     methods: {
-      copyWalletAddress(){
-        this.$toast.success('Address copied successfully.')
+      extractTrader: function(trade){
+        if(trade.user._id === this.$auth.user._id)
+          return trade.advertisementOwner;
+        else
+          return trade.user;
       }
     }
   }

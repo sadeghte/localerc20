@@ -178,7 +178,13 @@
     components: {UpdateUsername, UpdateEmail},
     data() {
       return {
-        user: null
+        user: null,
+        id: null,
+        firstName: "",
+        lastName: "",
+        about: "",
+        country: "",
+        mobile: "",
       }
     },
     asyncData ({ params, $axios, app }) {

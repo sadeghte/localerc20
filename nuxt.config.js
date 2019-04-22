@@ -20,13 +20,13 @@ module.exports = {
     ],
     script:[
       {src: "/coreui/vendors/jquery/js/jquery.min.js"},
-      {src: "/coreui/vendors/popper.js/js/popper.min.js"},
+      // {src: "/coreui/vendors/popper.js/js/popper.min.js"},
       {src: "/coreui/vendors/bootstrap/js/bootstrap.min.js"},
-      {src: "/coreui/vendors/pace-progress/js/pace.min.js"},
-      {src: "/coreui/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"},
+      // {src: "/coreui/vendors/pace-progress/js/pace.min.js"},
+      // {src: "/coreui/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"},
       {src: "/coreui/vendors/@coreui/coreui/js/coreui.min.js"},
-      {src: "/coreui/vendors/chart.js/js/Chart.min.js"},
-      {src: "/coreui/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js"},
+      // {src: "/coreui/vendors/chart.js/js/Chart.min.js"},
+      // {src: "/coreui/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js"},
       // {src: "/coreui/js/main.js"},
     ],
     link: [
@@ -37,7 +37,7 @@ module.exports = {
       { rel: 'stylesheet' , href: '/coreui/vendors/flag-icon-css/css/flag-icon.min.css' },
       { rel: 'stylesheet' , href: '/coreui/vendors/font-awesome/css/font-awesome.min.css' },
       { rel: 'stylesheet' , href: '/coreui/vendors/simple-line-icons/css/simple-line-icons.css' },
-      { rel: 'stylesheet' , href: '/coreui/vendors/pace-progress/css/pace.min.css' },
+      // { rel: 'stylesheet' , href: '/coreui/vendors/pace-progress/css/pace.min.css' },
       { rel: 'stylesheet' , href: '/coreui/css/style.css' }
     ]
   },

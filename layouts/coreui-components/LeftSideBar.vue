@@ -10,40 +10,56 @@
         </li>
         <li class="nav-title">Theme</li>
         <li class="nav-item">
-          <a class="nav-link" href="/profile">
-            <i class="nav-icon icon-user"></i> Profile</a>
+          <BaseLink class="nav-link" :to="{name: 'profile-id'}">
+            <i class="nav-icon icon-user"></i>
+            <span> Profile</span>
+          </BaseLink>
         </li>
         <!--<li class="nav-item">-->
           <!--<a class="nav-link" href="/editProfile">-->
             <!--<i class="fa fa-edit"></i> Edit Profile</a>-->
         <!--</li>-->
         <li class="nav-item">
-          <a class="nav-link" href="/wallet">
-            <i class="nav-icon icon-wallet"></i> Wallet</a>
+          <BaseLink class="nav-link" :to="{name: 'wallet'}">
+            <i class="nav-icon icon-wallet"></i>
+            <span> Wallet</span>
+          </BaseLink>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="typography.html">
+          <a class="nav-link" href="#">
             <i class="nav-icon icon-bell"></i> Notifications</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/trades">
-            <i class="nav-icon fa fa-handshake-o"></i> Trades</a>
+          <BaseLink class="nav-link" :to="{name: 'trades'}">
+            <i class="nav-icon fa fa-handshake-o"></i>
+            <span> Trades</span>
+          </BaseLink>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/disputes">
-            <i class="nav-icon fa fa-balance-scale"></i> Disputes</a>
+          <BaseLink class="nav-link" :to="{name: 'disputes'}">
+            <i class="nav-icon fa fa-balance-scale"></i>
+            <span> Disputes</span>
+          </BaseLink>
         </li>
         <li class="nav-item nav-dropdown">
           <a class="nav-link nav-dropdown-toggle" href="#">
             <i class="nav-icon fa fa-buysellads"></i> Advertisements</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
-              <a class="nav-link" href="/advertisement">
-                <i class="nav-icon icon-puzzle"></i> List</a>
+              <BaseLink class="nav-link" :to="{name: 'advertisement'}">
+                <i class="nav-icon icon-puzzle"></i>
+                <span> List</span>
+              </BaseLink>
+              <!--<a class="nav-link" href="/advertisement">-->
+                <!--<i class="nav-icon icon-puzzle"></i> List</a>-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/advertisement/new">
-                <i class="nav-icon icon-puzzle"></i> New</a>
+              <BaseLink class="nav-link" :to="{name: 'advertisement-new'}">
+                <i class="nav-icon icon-puzzle"></i>
+                <span> New</span>
+              </BaseLink>
+              <!--<a class="nav-link" href="/advertisement/new">-->
+                <!--<i class="nav-icon icon-puzzle"></i> New</a>-->
             </li>
           </ul>
         </li>

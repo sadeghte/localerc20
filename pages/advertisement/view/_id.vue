@@ -36,7 +36,19 @@
             </div>
             <div class="tbl-info-item">
               <div>&nbsp;</div>
-              <span>Feedback score:&nbsp;<span class="badge badge-success">100 %</span></span>
+              <span>
+                <span>Feedback score:&nbsp;</span>
+                <span class="badge badge-success">{{owner.score}}</span>
+                <no-ssr>
+                  <VueStarRating
+                      style="display: inline-block;"
+                      :star-size="15"
+                      :read-only="true"
+                      :rating="owner.score"
+                      :show-rating="false"
+                  />
+                </no-ssr>
+              </span>
             </div>
             <div v-if="false" class="tbl-info-item">
               <div><i class="fa fa-check-square fa-lg color-success"></i></div>
@@ -151,10 +163,11 @@
   import {mapGetters, mapActions} from 'vuex';
   import moment from 'moment';
   import LoginModal from '../../../components/loginModal.vue';
+  import VueStarRating from 'vue-star-rating';
 
   export default {
     layout: 'coreui-no-sidemenu',
-    components:{TradeStartModal, LoginModal},
+    components:{TradeStartModal, LoginModal, VueStarRating},
     data(){
       return {
         tokenCount: '',

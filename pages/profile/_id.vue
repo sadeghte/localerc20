@@ -81,8 +81,23 @@
               <span class="fx-basis-5">{{userJoinDate}}</span>
             </div>
             <div class="d-fx-ic">
+              <h6 class="fx-basis-5">Last Seen:</h6>
+              <span class="fx-basis-5">{{userLastSeen}}</span>
+            </div>
+            <div class="d-fx-ic">
               <h6 class="fx-basis-5">Feedback score:</h6>
-              <span class="fx-basis-5"><span class="badge badge-success">100 %</span></span>
+              <span class="fx-basis-5">
+                <span class="badge badge-success">{{user.score}}</span>
+                <no-ssr>
+                  <VueStarRating
+                      style="display: inline-block;"
+                      :star-size="18"
+                      :read-only="true"
+                      :rating="user.score"
+                      :show-rating="false"
+                  />
+                </no-ssr>
+              </span>
             </div>
             <div v-if="false" class="d-fx-ic">
               <h6 class="fx-basis-5">Trusted By:</h6>
@@ -130,7 +145,7 @@
         <!--</div>-->
       </div>
     </div>
-    <div v-if="user._id === $auth.user._id" class="row nosp mgb10 bd-1">
+    <div v-if="isCurrentUser" class="row nosp mgb10 bd-1">
       <div class="col-md-6 pd10">
         <UpdateUsername />
         <UpdateEmail />
@@ -163,6 +178,21 @@
         </button>
       </div>
     </div>
+    <h3 class="heading-gray">User feedback</h3>
+    <div v-for="f in feedbacks">
+      <div class="mgb10">
+        <span>{{feedbackDateTitle(f)}}</span>
+        <no-ssr>
+          <VueStarRating
+              :star-size="18"
+              :read-only="true"
+              :rating="f.star"
+              :show-rating="false"
+          />
+        </no-ssr>
+        <p>{{f.comment}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -171,14 +201,16 @@
   import UpdateUsername from '../../components/UpdateUsername';
   import UpdateEmail from '../../components/UpdateEmail';
   import moment from 'moment';
+  import VueStarRating from 'vue-star-rating';
 
   export default {
     middleware: 'auth',
     layout: 'coreui',
-    components: {UpdateUsername, UpdateEmail},
+    components: {UpdateUsername, UpdateEmail, VueStarRating},
     data() {
       return {
         user: null,
+        feedbacks: [],
         id: null,
         firstName: "",
         lastName: "",
@@ -190,10 +222,13 @@
     asyncData ({ params, $axios, app }) {
 //      if(params.id.toString() === app.store.$auth.user._id.toString())
 //        return Promise.resolve(app.store.$auth.user);
-      return $axios.post(`/api/v0.1/user/get-info`, {userId: params.id})
+      return $axios.post(`/api/v0.1/user/get-info`, {userId: params.id, feedback: true})
           .then(({data}) => {
             if(data.success)
-              return {user: data.user};
+              return {
+                user: data.user,
+                feedbacks: data.feedbacks
+              };
             return {user: null}
           })
     },
@@ -208,6 +243,9 @@
     computed: {
         ...mapState('auth', ['loggedIn', 'countries']),
         ...mapGetters('global', ['countries']),
+      isCurrentUser: function () {
+        return this.user && this.user._id === this.$auth.user._id;
+      },
       userCountryFlag: function () {
         return "flag-icon-" + this.user.country.toLowerCase();
       },
@@ -220,6 +258,9 @@
       userJoinDate: function () {
           return moment(this.user.createdAt).fromNow();
       },
+      userLastSeen: function () {
+          return moment(this.user.lastSeen).fromNow();
+      },
       usernameCrop: function () {
         if(this.user.username.length < 20)
           return this.user.username;
@@ -231,7 +272,9 @@
       }
     },
     methods: {
-
+      feedbackDateTitle(feedback){
+        return moment(feedback.updatedAt).format('YYYY-MM-DD HH:ss');
+      },
       onAvatarSelect(){
         this.$toast.success('your avatar changed successfully');
       },

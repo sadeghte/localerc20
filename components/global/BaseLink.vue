@@ -1,6 +1,10 @@
 <script>
 export default {
   props: {
+    loginProtect:{
+      type: Boolean,
+      default: false
+    },
     href: {
       type: String,
       default: '',
@@ -38,11 +42,17 @@ export default {
         ...(this.to || {}),
       }
     },
+    linkDisabled(){
+      return this.loginProtect && !this.$auth.loggedIn;
+    }
   },
   created() {
     this.validateProps()
   },
   methods: {
+    protectionAlert(){
+      alert('You are not logged in. Login please and try again.');
+    },
     // Perform more complex prop validations than is possible
     // inside individual validator functions for each prop.
     validateProps() {
@@ -83,7 +93,10 @@ export default {
 </script>
 
 <template>
-  <a :class="_class" v-if="href" v-bind="$attrs" :href="href" target="_blank">
+  <a :class="_class" v-if="linkDisabled" v-bind="$attrs" href="#" @click="protectionAlert">
+      <slot/>
+  </a>
+  <a :class="_class" v-else-if="href" v-bind="$attrs" :href="href" target="_blank">
       <slot/>
   </a>
   <nuxt-link :class="_class" v-else v-bind="$attrs" :to="routerLinkTo" :target="target">

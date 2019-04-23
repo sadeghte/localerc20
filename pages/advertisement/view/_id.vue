@@ -125,13 +125,21 @@
     </div>
     <div class="row mb-4">
       <div class="col-sm-4"></div>
-      <div class="col-sm-4">
+      <div class="col-sm-4" v-if="$auth.loggedIn">
         <button
             class="btn btn-pill btn-block btn-success"
             @click="startTrade($event)"
             type="button"
             v-tooltip.top="{show: (showTermsConfirmTooltip && tooltipMessage), content: tooltipMessage, trigger: 'manual', classes:['tooltip-danger', 'text-left']}"
         >{{advertisement.type=='sell'?'Buy':'Sell'}}</button>
+      </div>
+      <div class="col-sm-4" v-else>
+        <LoginModal ref="advViewLoginModal"/>
+        <button
+            class="btn btn-pill btn-block btn-success"
+            type="button"
+            @click="$refs.advViewLoginModal.show($event)"
+        >Login / Register to continue</button>
       </div>
       <div class="col-sm-4"></div>
     </div>
@@ -142,10 +150,11 @@
   import TradeStartModal from '../../../components/TradeStartModal';
   import {mapGetters, mapActions} from 'vuex';
   import moment from 'moment';
+  import LoginModal from '../../../components/loginModal.vue';
 
   export default {
     layout: 'coreui-no-sidemenu',
-    components:{TradeStartModal},
+    components:{TradeStartModal, LoginModal},
     data(){
       return {
         tokenCount: '',

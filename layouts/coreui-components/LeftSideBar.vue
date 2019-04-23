@@ -15,10 +15,6 @@
             <span> Profile</span>
           </BaseLink>
         </li>
-        <!--<li class="nav-item">-->
-          <!--<a class="nav-link" href="/editProfile">-->
-            <!--<i class="fa fa-edit"></i> Edit Profile</a>-->
-        <!--</li>-->
         <li class="nav-item">
           <BaseLink class="nav-link" :to="{name: 'wallet'}">
             <i class="nav-icon icon-wallet"></i>
@@ -50,16 +46,12 @@
                 <i class="nav-icon icon-puzzle"></i>
                 <span> List</span>
               </BaseLink>
-              <!--<a class="nav-link" href="/advertisement">-->
-                <!--<i class="nav-icon icon-puzzle"></i> List</a>-->
             </li>
             <li class="nav-item">
               <BaseLink class="nav-link" :to="{name: 'advertisement-new'}">
                 <i class="nav-icon icon-puzzle"></i>
                 <span> New</span>
               </BaseLink>
-              <!--<a class="nav-link" href="/advertisement/new">-->
-                <!--<i class="nav-icon icon-puzzle"></i> New</a>-->
             </li>
           </ul>
         </li>

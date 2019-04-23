@@ -236,6 +236,7 @@
   };
 
   export default {
+    middleware: ['auth'],
     layout: 'coreui',
     components: {TimeSelect},
     data() {

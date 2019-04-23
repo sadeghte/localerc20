@@ -13,21 +13,16 @@
         <BaseLink _class="nav-link" :to="{name: 'search'}">Search</BaseLink>
       </li>
       <li class="nav-item px-3">
-        <BaseLink _class="nav-link" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
+        <BaseLink _class="nav-link" :loginProtect="true" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
       </li>
       <li class="nav-item px-3">
-        <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Deposit</BaseLink>
+        <BaseLink _class="nav-link px-3" :loginProtect="true" :to="{name: 'wallet'}">Deposit</BaseLink>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Help</a>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <li v-if="!loggedIn" class="nav-item d-md-down-none px-3">
-        <a class="nav-link" href="#">
-          Sign up
-        </a>
-      </li>
       <li v-if="!loggedIn" class="nav-item px-3">
         <a class="nav-link" href="#"  @click="openLoginModal($event)">
           Log in
@@ -41,12 +36,12 @@
       <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
         <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Wallet</BaseLink>
       </li>
-      <li class="nav-item d-md-down-none">
-        <a class="nav-link" href="#">
-          <i class="icon-bell"></i>
-          <span class="badge badge-pill badge-danger">5</span>
-        </a>
-      </li>
+      <!--<li class="nav-item d-md-down-none">-->
+        <!--<a class="nav-link" href="#">-->
+          <!--<i class="icon-bell"></i>-->
+          <!--<span class="badge badge-pill badge-danger">5</span>-->
+        <!--</a>-->
+      <!--</li>-->
       <li v-if="loggedIn" class="nav-item d-md-down-none px-3">
         <a class="nav-link" href="/profile">
           {{fullName}}
@@ -65,10 +60,10 @@
           <a class="nav-link px-3" href="/search">Search</a>
         </li>
         <li class="nav-item">
-          <BaseLink _class="nav-link px-3" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
+          <BaseLink _class="nav-link px-3" :loginProtect="true" :to="{name: 'advertisement-new'}">Post a trade</BaseLink>
         </li>
         <li class="nav-item">
-          <BaseLink _class="nav-link px-3" :to="{name: 'wallet'}">Deposit</BaseLink>
+          <BaseLink _class="nav-link px-3" :loginProtect="true" :to="{name: 'wallet'}">Deposit</BaseLink>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3" href="#">Help</a>

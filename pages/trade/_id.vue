@@ -16,49 +16,29 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <div class="alert alert-dark" role="alert">
-          <div>1: Read all term of trade.</div>
-          <div>2: Select the checkbox below it.</div>
-          <div>3: Do trade.</div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="alert alert-dark" role="alert">
-          <div>
-            <strong>Advertisement: </strong>
-            <BaseLink :to="{name: 'advertisement-view-id', params:{id: trade.advertisement._id}}">
-              <span>{{trade.advertisement._id}}</span>
-            </BaseLink>
-          </div>
-          <div>
-            <strong>{{trade.type == 'sell' ? 'Seller: ' : 'Buyer: '}}</strong>
-            <BaseLink :to="{name: 'profile-id', params:{id: trade.user._id}}">{{trade.user.username}}</BaseLink>
-          </div>
-          <div><strong>Exchange rate: </strong><span class="badge badge-primary">{{trade.advertisement.amount}}</span> USD / TOKEN</div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header"><strong>Actions</strong></div>
+        <div v-if="canPostFeedback" class="card">
+          <div class="card-header"><strong>Feedback</strong></div>
           <div class="card-body">
-            <h5>Trade conditions</h5>
-            <div class="alert alert-dark" role="alert">
-              <pre style="white-space: pre-line;">
-<strong>Step 1:</strong>
-    Do payment and attach your receipt here.
-
-<strong>Step 2:</strong>
-    text to mt mobile (+1xxx-xxx-xxxx)
-
-<strong>Step 3:</strong>
-    some instructions
-
-<strong>Step 4:</strong>
-    some instructions
-              </pre>
+            <div style="margin-bottom: 1em">
+              <no-ssr>
+                <VueStarRating
+                    :rating="feedbackStar"
+                    :star-size="25"
+                    :show-rating="false"
+                    @rating-selected="setFeedbackStar"
+                />
+              </no-ssr>
             </div>
+            <textarea v-model="feedbackComment" style="width: 100%" rows="5"></textarea>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-sm btn-primary" @click="postFeedback">Send Feedback</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><strong>Terms of trade</strong></div>
+          <div class="card-body">
+            <pre style="white-space: pre-line;">{{trade.advertisement.terms}}</pre>
 
             <button v-if="isStartBtnVisible" @click="doStartTrade" class="btn btn-primary" type="submit" style="width: 100%">Start Trade</button>
 
@@ -79,13 +59,28 @@
         </div>
       </div>
       <div class="col-md-8">
+        <div class="alert alert-dark" role="alert">
+          <div>
+            <strong>Advertisement: </strong>
+            <BaseLink :to="{name: 'advertisement-view-id', params:{id: trade.advertisement._id}}">
+              <span>{{trade.advertisement._id}}</span>
+            </BaseLink>
+          </div>
+          <div>
+            <strong>{{traderTitle}}</strong>
+            <BaseLink :to="{name: 'profile-id', params:{id: traderID}}">{{traderUsername}}</BaseLink>
+          </div>
+          <div>
+            <strong>Exchange rate: </strong>
+            <span class="badge badge-primary">{{trade.advertisement.amount}}</span> {{advertisementCurrency}} / TOKEN</div>
+        </div>
         <div class="card">
           <div class="card-header"><strong>Message History</strong></div>
           <div class="card-body">
             <p v-for="msg in trade.messages">
               <strong v-if="msg.sender._id === $auth.user._id" class="text-primary">You: </strong>
               <strong v-else>
-                <BaseLink :to="{name:'profile', params:{}}">{{trade.advertisement.type==='sell' ? 'Seller' : 'Buyer'}}: </BaseLink>
+                <BaseLink :to="{name:'profile-id', params:{id: traderID}}">{{traderUsername}}: </BaseLink>
               </strong>
 
               <span>{{msg.content}}</span>
@@ -98,30 +93,43 @@
         </div>
       </div>
     </div>
+    <!--<div class="row" style="padding: 2em">-->
+      <!--<pre>{{JSON.stringify(trade,null,2)}}</pre>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
   import StepProgress from '~/components/StepProgress.vue';
-  import {mapActions} from 'vuex';
+  import VueStarRating from 'vue-star-rating';
+  import {mapActions, mapGetters} from 'vuex';
   export default {
     layout: 'coreui',
-    components:{StepProgress},
+    components:{StepProgress, VueStarRating},
     data(){
       return{
         message: '',
         sendMessageInProgress: false,
+        feedbackStar: 0,
+        feedbackComment: ""
       };
     },
     asyncData ({ params, $axios }) {
       return $axios.post(`/api/v0.1/trade/get-info`,{id: params.id})
           .then(({data}) => {
-            if(data.success)
-              return {trade: data.trade};
+            if(data.success){
+              let _data = {trade: data.trade};
+              if(data.feedback) {
+                _data.feedbackStar = data.feedback.star;
+                _data.feedbackComment= data.feedback.comment;
+              }
+              return _data;
+            }
             return {trade: null}
           })
     },
     computed: {
+      ...mapGetters('global',['currencies']),
       isStartBtnVisible: function () {
         return this.trade.status==='request' && this.$auth.user._id == this.trade.advertisement.user;
       },
@@ -152,6 +160,42 @@
             ||
             (this.trade.advertisement.type === 'sell' && this.$auth.user._id === this.trade.user._id)
         );
+      },
+      traderTitle: function () {
+        if(this.trade.advertisementOwner._id === this.$auth.user._id){
+          if(this.trade.advertisement.type === 'sell')
+            return 'Buyer';
+          else
+            return "Seller"
+        }else{
+          if(this.trade.advertisement.type === 'sell')
+            return 'Seller';
+          else
+            return "Buyer"
+        }
+      },
+      traderID: function () {
+        if(this.trade.advertisementOwner._id === this.$auth.user._id){
+          return this.trade.user._id;
+        }else{
+          return this.trade.advertisementOwner._id;
+        }
+      },
+      traderUsername: function () {
+        if(this.trade.advertisementOwner._id === this.$auth.user._id){
+          return this.trade.user.username;
+        }else{
+          return this.trade.advertisementOwner.username;
+        }
+      },
+      advertisementCurrency: function () {
+        let currency = this.currencies.find(item => item._id===this.trade.advertisement.currency)
+        if(currency)
+          return currency.code;
+        return "---"
+      },
+      canPostFeedback: function () {
+        return ['release','dispute','cancel','done'].indexOf(this.trade.status) >= 0;
       }
     },
     methods:{
@@ -237,6 +281,27 @@
 //        }
 //        this.startTradeInProgress = false;
       },
+      setFeedbackStar(star){
+        this.feedbackStar = star;
+      },
+      postFeedback(){
+        if(this.feedbackStar<1 || this.feedbackStar > 5){
+          return alert('Please select feedback rate');
+        }
+        return this.$axios.post(`/api/v0.1/trade/post-feedback`,{tradeId: this.trade._id, star: this.feedbackStar, comment: this.feedbackComment})
+            .then(({data}) => {
+              return data;
+            }).catch(error => {
+              return error.response.data;
+            })
+            .then(data => {
+              if(data.success)
+                this.$toast.success("Your feedback registered successfully");
+              else {
+                this.$toast.error(data.message || "Server side error");
+              }
+            })
+      }
     }
   }
 </script>

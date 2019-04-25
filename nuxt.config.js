@@ -61,6 +61,7 @@ module.exports = {
     '~/plugins/v-viewer.js',
     '~/plugins/v-tooltip.js',
     '~/plugins/vue-clipboard.js',
+    '~/plugins/custom-filters.js',
   ],
 
   /*

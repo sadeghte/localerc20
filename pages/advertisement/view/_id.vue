@@ -32,7 +32,7 @@
             <!--</div>-->
             <div class="tbl-info-item">
               <div>&nbsp;</div>
-              <span>Confirmed trades:&nbsp;<strong>{{$auth.user.confirmedTrades}} trade</strong></span>
+              <span>Confirmed trades:&nbsp;<strong>{{$auth.user.confirmedTrades >> '0'}} trade</strong></span>
             </div>
             <div class="tbl-info-item">
               <div>&nbsp;</div>
@@ -71,11 +71,11 @@
             </div>
             <div class="tbl-info-item">
               <div><i class="fa fa-money fa-lg"></i></div>
-              <span>Price&nbsp;<strong class="number">${{advertisement.amount}}</strong></span>
+              <span>Price&nbsp;<strong class="number">{{advertisement.amount|commafy}} {{advertisement.currency.code}}</strong></span>
             </div>
             <div class="tbl-info-item">
               <div>&nbsp;</div>
-              <span>Trade&nbsp;limit:&nbsp;<strong>{{advertisement.limitMin}} - {{advertisement.limitMax}} USD</strong></span>
+              <span>Trade&nbsp;limit:&nbsp;<strong>{{advertisement.limitMin}} - {{advertisement.limitMax}} {{advertisement.token.code}}</strong></span>
             </div>
             <div class="tbl-info-item">
               <div><i class="fa fa-credit-card fa-lg"></i></div>
@@ -95,7 +95,7 @@
           <img :src="'/erc20-tokens/' + advertisement.token.code + '.png'" class="token-img-2" style="margin: auto 4px auto 0">
           <div>
             <div class="fs-15">{{advertisement.token.title}}</div>
-            <div class="number">${{advertisement.amount}}</div>
+            <div class="number">{{advertisement.amount | commafy}} {{advertisement.currency.code}}</div>
           </div>
         </div>
       </div>
@@ -103,9 +103,9 @@
         <div class="row">
           <div class="col-md-6">
             <div class="d-fx pdv-20">
-              <span class="fs-20 mg-v-auto mgr-05" style="color: #cbcbcb"><strong>USD</strong></span>
+              <span class="fs-20 mg-v-auto mgr-05" style="color: #cbcbcb"><strong>{{advertisement.currency.code}}</strong></span>
               <div class="mg-v-auto">
-                <input placeholder="$0.0" v-model="tradeTotalAmount" type="text" class="no-border fs-15">
+                <input placeholder="0.0" v-model="tradeTotalAmount" type="text" class="no-border fs-15">
               </div>
             </div>
           </div>

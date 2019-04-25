@@ -26,13 +26,13 @@
             <strong>{{ownerCountry ? ownerCountry.name : ''}}</strong>
           </span>
             </div>
+            <!--<div class="tbl-info-item">-->
+              <!--<div>&nbsp;</div>-->
+              <!--<span>Trade volume:&nbsp;<strong>430 USD</strong></span>-->
+            <!--</div>-->
             <div class="tbl-info-item">
               <div>&nbsp;</div>
-              <span>Trade volume:&nbsp;<strong>430 USD</strong></span>
-            </div>
-            <div class="tbl-info-item">
-              <div>&nbsp;</div>
-              <span>Confirmed trades:&nbsp;<strong>8 trade</strong></span>
+              <span>Confirmed trades:&nbsp;<strong>{{$auth.user.confirmedTrades}} trade</strong></span>
             </div>
             <div class="tbl-info-item">
               <div>&nbsp;</div>

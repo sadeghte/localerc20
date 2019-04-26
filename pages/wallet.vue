@@ -35,7 +35,11 @@
               <tbody>
               <tr v-for="row in transactions">
                 <!--<td>{{row.txTime}}</td>-->
-                <td><a href="/buy/fdfdfdfd">{{row._id.substr(0,8) + '...'}}</a></td>
+                <td>
+                  <BaseLink v-if="row.trade" :to="{name: 'trade-id', params: {id: row.trade}}">
+                    <span>{{row._id.substr(0,8) + '...'}}</span>
+                  </BaseLink>
+                </td>
                 <td><a href="#">{{row.from.substr(0,12) + ' ...'}}</a></td>
                 <td><a href="#">{{row.to.substr(0,12) + ' ...'}}</a></td>
                 <td>
@@ -146,7 +150,9 @@
 
 <script>
   import {mapGetters, mapActions} from 'vuex';
+  import BaseLink from "../components/global/BaseLink";
   export default {
+    components: {BaseLink},
     layout: 'coreui',
     data() {
       return {

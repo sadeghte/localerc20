@@ -9,7 +9,12 @@
     <td>
       <div>{{fullName(advertisement.user)}}</div>
       <div class="small text-muted">
-        <span>{{userAge(advertisement.user)}}</span> | Registered: {{registerDate(advertisement.user)}}</div>
+        <!--<span>{{userAge(advertisement.user)}}</span> | Registered: {{registerDate(advertisement.user)}}-->
+        <img src="/imgs/brightid-av-1.jpg" style="width: 10px"/>
+        <strong>{{advertisement.user.brightIdScore}} | </strong>
+        <img src="/imgs/star.jpg" alt="" style="width: 10px" />
+        <strong>{{advertisement.user.score}} | {{advertisement.user.confirmedTrades}}</strong>
+      </div>
     </td>
     <td class="text-left">
       <i class="flag-icon h4 mb-0" :class="['flag-icon-' + advertisement.user.country.toLowerCase()]" id="us" title="us"></i>

@@ -52,7 +52,7 @@
                 <button v-if="isDisputeBtnVisible" @click="doDisputeTrade" class="btn btn-danger" type="submit" style="width: 100%">Dispute</button>
               </div>
               <div class="col-sm-6">
-                <button v-if="isCancelBtnVisible" @click="doCancelTrace" class="btn btn-warning" type="submit" style="width: 100%">Cancel Trade</button>
+                <button v-if="isCancelBtnVisible" @click="doCancelTrade" class="btn btn-warning" type="submit" style="width: 100%">Cancel Trade</button>
               </div>
             </div>
           </div>

@@ -76,7 +76,7 @@
         </div>
         <div class="card">
           <div class="card-header"><strong>Message History</strong></div>
-          <div class="card-body">
+          <div class="card-body" v-viewer>
             <p v-for="msg in trade.messages">
               <strong v-if="msg.sender._id === $auth.user._id" class="text-primary">You: </strong>
               <strong v-else>
@@ -84,11 +84,25 @@
               </strong>
 
               <span>{{msg.content}}</span>
+              <br v-if="msg.attachments.length > 0" />
+              <img
+                style="height: 6em; border: 2px solid #aaa; border-radius: 4px; cursor: pointer"
+                v-if="msg.attachments.length > 0"
+                v-for="attachment in msg.attachments"
+                :src="getAttachmentUrl(attachment)"
+              />
             </p>
             <textarea v-model="message" class="form-control trade-comment" rows="5" placeholder="Write your message to seller"></textarea>
 
             <button @click="sendMessage" class="btn btn-primary" type="submit">Send</button>
+            <button @click="$refs.fileUpload.addFiles()" class="btn btn-primary" type="submit">Attachment</button>
             <input type="file" value="Attachment" />
+            <VueFileUpload
+              ref="fileUpload"
+              :buttonsVisible="false"
+              targetUrl="/api/v0.1/trade/message"
+              :extraFields="{tradeId: trade._id,type: 'text', message}"
+            />
           </div>
         </div>
       </div>
@@ -101,14 +115,19 @@
 
 <script>
   import StepProgress from '~/components/StepProgress.vue';
+  import VueFileUpload from '~/components/VueFileUpload.vue';
   import VueStarRating from 'vue-star-rating';
   import {mapActions, mapGetters} from 'vuex';
+  import replaceAll from '../../utils/replaceAll';
+  const proxyConfig = require('../../nuxt.proxy.config');
+  let apiRoot = proxyConfig["/api"].target;
+
   export default {
     layout: 'coreui',
-    components:{StepProgress, VueStarRating},
+    components:{StepProgress, VueStarRating, VueFileUpload},
     data(){
       return{
-        message: '',
+        message: 'test message',
         sendMessageInProgress: false,
         feedbackStar: 0,
         feedbackComment: ""
@@ -203,18 +222,29 @@
       async sendMessage(){
         if(!!this.message) {
           this.sendMessageInProgress = true;
-          let response = await this.sendTradeMessage({tradeId: this.trade._id, message: this.message});
-          if(response.success){
-            this.trade.messages = response.messages;
-            this.message = "";
-          }else{
-            // TODO: handle global alert modal
-            if(response.message)
-              alert(response.message);
-            else
-              alert('server side error');
-          }
-          this.sendMessageInProgress = false;
+          // return console.log(this.$refs.fileUpload.getFormData());
+          // let response = await this.sendTradeMessage({tradeId: this.trade._id, message: this.message});
+          this.$axios.post(
+            '/api/v0.1/trade/message',
+            this.$refs.fileUpload.getFormData(),
+            //{headers: {'Content-Type': 'multipart/form-data'}}
+          )
+            .then(({data}) => data)
+            .catch(error => error.response.data)
+            .then(response => {
+              this.sendMessageInProgress = false;
+              if(response.success){
+                this.trade.messages = response.messages;
+                this.message = "";
+                this.$refs.fileUpload.clearFiles();
+              }else{
+                // TODO: handle global alert modal
+                if(response.message)
+                  alert(response.message);
+                else
+                  alert('server side error');
+              }
+            })
         }else{
           // TODO: global alert modal
           alert('Enter text message');
@@ -301,6 +331,9 @@
                 this.$toast.error(data.message || "Server side error");
               }
             })
+      },
+      getAttachmentUrl(attachment){
+        return apiRoot + attachment.substr(1);
       }
     }
   }

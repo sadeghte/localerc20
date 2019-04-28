@@ -1,4 +1,5 @@
-const pkg = require('./package')
+const pkg = require('./package');
+const proxyConfig = require('./nuxt.proxy.config');
 
 
 module.exports = {
@@ -101,13 +102,7 @@ module.exports = {
     position: 'top-center',
     duration: 3000
   },
-  proxy: {
-    '/api': {
-      target: 'http://localhost:5554/',
-      // changeOrigin: true,
-      // pathRewrite: {'^/api': '/api'}
-    }
-  },
+  proxy: proxyConfig,
   auth: {
     // nuxtjs-auth options
     strategies: {

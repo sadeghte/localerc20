@@ -155,7 +155,7 @@ export const actions = {
         })
   },
   sendTradeMessage({dispatch, commit, state, rootState}, {tradeId,message}) {
-    return this.$axios.post('/api/v0.1/trade/message', {tradeId, type: 'text', content: message})
+    return this.$axios.post('/api/v0.1/trade/message', {tradeId, message})
         .then(({data}) => {
           return data;
         }).catch(err => {
